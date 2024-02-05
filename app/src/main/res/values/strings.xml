@@ -4,4 +4,8 @@
     <string name="title_channel">Channel</string>
     <string name="title_search">Search</string>
     <string name="title_my_page">My Page</string>
+
+    <!--sounghyun-->
+    <string name="home_title_most_movie">실시간 인기영화</string>
+    <string name="home_title_category_movie">카테고리별 인기 영화</string>
 </resources>
