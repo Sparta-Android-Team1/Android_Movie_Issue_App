@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_movie_issue_app.databinding.FragmentMyPageBinding
-import com.example.android_movie_issue_app.databinding.FragmentNotificationsBinding
 
 class MyPageFragment : Fragment() {
 
