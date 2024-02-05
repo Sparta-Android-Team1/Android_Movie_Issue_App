@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Android_Movie_Issue_App</string>
+    <string name="title_home">Home</string>
+    <string name="title_channel">Channel</string>
+    <string name="title_search">Search</string>
+    <string name="title_my_page">My Page</string>
+</resources>
