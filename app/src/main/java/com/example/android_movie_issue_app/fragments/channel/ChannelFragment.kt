@@ -11,7 +11,7 @@ import com.example.android_movie_issue_app.databinding.FragmentChannelBinding
 
 class ChannelFragment : Fragment() {
 
-    // Netflix, A24, Sony, CJ, 롯데, Disney, MARVEL, 쇼박스, 워너브라더스, 유니버셜, 파라마운트
+    // Netflix, A24, Sony, CJ, 롯데, Disney, MARVEL, 쇼박스, 워너브라더스, 유니버셜, 파라마운트,인디스토리
 
 
     private var _binding: FragmentChannelBinding? = null
