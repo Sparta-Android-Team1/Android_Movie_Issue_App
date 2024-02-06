@@ -12,7 +12,7 @@ interface RetrofitInterface {
     suspend fun searchVideo(
         @Query("chart") chart: String?,
         @Query("maxResults") maxResult: Int?,
-        @Query("key") apiKey: String = Constants.apiKey,
+        @Query("key") apiKey: String = Constants.youtubeApiKey,
         @Query("part") videoPart: List<String> = listOf("snippet", "statistics"),
     ): VideoInfo
 }

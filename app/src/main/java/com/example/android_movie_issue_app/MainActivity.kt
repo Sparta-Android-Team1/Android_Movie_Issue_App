@@ -29,8 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //테스트 코드(민용) 지워도 됩니다.
-        communicateNetWork()
-        //
+        //communicateNetWork()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -52,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         //apiData!!.items[0].snippet.channelTitle
         //apiData!!.items[0].snippet.publishedAt
         //apiData!!.items[0].statistics.viewCount
+        //apiData!!.items[0].snippet.thumbnails.high.url
 
         Log.i("Minyong", apiData!!.items[0].snippet.toString())
         Log.i("Minyong", apiData!!.items[15].statistics.toString())
