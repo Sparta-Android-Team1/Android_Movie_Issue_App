@@ -67,4 +67,7 @@ dependencies {
 
     //Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    //splashscreen api
+    implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
 }
