@@ -1,6 +1,10 @@
 package com.example.android_movie_issue_app.retrofit
 
 import android.util.Log
+import com.example.android_movie_issue_app.constants.Constants
+import com.example.android_movie_issue_app.data.SearchVideo
+import com.example.android_movie_issue_app.data.VideoInfo
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -22,4 +26,8 @@ object RetrofitClient {
     }
 
     val youtubeApi : RetrofitInterface? = getClient()?.create(RetrofitInterface::class.java)
+    val apiData: Call<VideoInfo> = youtubeApi!!.videoInfo("mostPopular", 20)
+
+    val youtubeApi2 : RetrofitInterface? = getClient()?.create(RetrofitInterface::class.java)
+
 }

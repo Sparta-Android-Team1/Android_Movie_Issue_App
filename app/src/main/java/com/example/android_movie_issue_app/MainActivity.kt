@@ -14,9 +14,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.android_movie_issue_app.constants.Constants
+import com.example.android_movie_issue_app.data.SearchVideo
+import com.example.android_movie_issue_app.data.VideoInfo
 import com.example.android_movie_issue_app.databinding.ActivityMainBinding
 import com.example.android_movie_issue_app.retrofit.RetrofitClient
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //테스트 코드(민용) 지워도 됩니다.
-        //communicateNetWork()
+        communicateNetWork()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -46,14 +51,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun communicateNetWork() = lifecycleScope.launch {
-        val apiData = RetrofitClient.youtubeApi?.searchVideo("mostPopular", 20)
+        //val apiData = RetrofitClient.youtubeApi?.searchVideo("mostPopular", 20)
 
-        //apiData!!.items[0].snippet.channelTitle
-        //apiData!!.items[0].snippet.publishedAt
-        //apiData!!.items[0].statistics.viewCount
-        //apiData!!.items[0].snippet.thumbnails.high.url
+        val apiData2: Call<SearchVideo> = RetrofitClient.youtubeApi2!!.searchVideo(Constants.WARNER_BROS_ID, "예고편", 10)
 
-        Log.i("Minyong", apiData!!.items[0].snippet.toString())
-        Log.i("Minyong", apiData!!.items[15].statistics.toString())
+        apiData2.enqueue(object : Callback<SearchVideo>{
+            override fun onResponse(call: Call<SearchVideo>, response: Response<SearchVideo>) {
+                response.body()!!.items.forEach {
+                    Log.i("Minyong", it.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<SearchVideo>, t: Throwable) {
+                Log.i("Minyong", "fail")
+            }
+        })
+
+        //Log.i("Minyong", apiData.items[0].snippet.toString())
+        //Log.i("Minyong", apiData!!.items[15].statistics.toString())
     }
 }
