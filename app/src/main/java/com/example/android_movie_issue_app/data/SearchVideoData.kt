@@ -4,8 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 
 data class SearchVideo(
+    @SerializedName("nextPageToken")
+    val nextPageToken: String,
+    @SerializedName("prevPageToken")
+    val prevPageToken: String,
     @SerializedName("items")
-    val items: MutableList<SearchItem>
+    val items: MutableList<SearchItem>,
 )
 
 data class SearchItem(
@@ -17,7 +21,7 @@ data class SearchItem(
 
 data class VideoID(
     @SerializedName("videoId")
-    var title: String,
+    var videoId: String,
 )
 data class SearchSnippet(
     @SerializedName("title")
@@ -30,4 +34,6 @@ data class SearchSnippet(
     var channelTitle: String, // 동영상이 속한 채널 제목
     @SerializedName("publishedAt")
     var publishedAt: String, // 동영상이 게시된 날짜와 시간
+    @SerializedName("channelId")
+    var channelId: String,
 )
