@@ -30,6 +30,14 @@
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
         >
+        <LinearLayout
+            android:id="@+id/layout_main_user_profile_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity= "center_vertical"
+            android:orientation="horizontal">
+
+        </LinearLayout>
 
     </HorizontalScrollView>
 
@@ -49,6 +57,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:id="@+id/rv_ranking_list"
         app:layout_constraintTop_toBottomOf="@id/tv_category_ranking"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

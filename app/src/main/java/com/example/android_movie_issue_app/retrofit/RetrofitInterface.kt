@@ -10,9 +10,9 @@ interface RetrofitInterface {
 
     @GET("videos")
     suspend fun searchVideo(
-        @Query("chart") chart: String?,
+        @Query("chart") chart: String?,     //필터 : char, id, myRating 중 하나는 필수 지정
         @Query("maxResults") maxResult: Int?,
-        @Query("key") apiKey: String = Constants.youtubeApiKey,
+        @Query("key") apiKey: String = Constants.youtubeApiKey_csh,
         @Query("part") videoPart: List<String> = listOf("snippet", "statistics"),
     ): VideoInfo
 }
