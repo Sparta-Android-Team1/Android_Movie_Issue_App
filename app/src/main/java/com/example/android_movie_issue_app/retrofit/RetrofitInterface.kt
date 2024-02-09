@@ -1,6 +1,7 @@
 package com.example.android_movie_issue_app.retrofit
 
 import com.example.android_movie_issue_app.constants.Constants
+import com.example.android_movie_issue_app.data.SearchChannels
 import com.example.android_movie_issue_app.data.SearchVideo
 import com.example.android_movie_issue_app.data.VideoInfo
 import retrofit2.Call
@@ -27,4 +28,11 @@ interface RetrofitInterface {
         @Query("key") apiKey: String = Constants.YOUTUBE_API_KEY,
         @Query("part") videoPart: List<String> = listOf("snippet"),
     ): Call<SearchVideo>
+
+    @GET("channels")
+    fun searchChannels(
+        @Query("id") id: String?,
+        @Query("key") apiKey: String = Constants.YOUTUBE_API_KEY,
+        @Query("part") part: String = "snippet",
+    ): Call<SearchChannels>
 }
