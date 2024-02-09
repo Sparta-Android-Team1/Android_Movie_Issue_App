@@ -44,10 +44,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         RetrofitViewModel.videoDataList.observe(viewLifecycleOwner) {
-
             it.forEach { index ->
-//                index?.id?.videoId
-//                index?.snippet?.thumbnails
                 if (index?.snippet?.channelId == Constants.NETFLIX_ID)
                     Log.i("Minyong", index.toString())
             }

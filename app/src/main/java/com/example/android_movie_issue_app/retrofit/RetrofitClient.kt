@@ -25,9 +25,5 @@ object RetrofitClient {
         return retrofitClient
     }
 
-    val testApi : RetrofitInterface? = getClient()?.create(RetrofitInterface::class.java)
-    //val apiData: Call<VideoInfo> = youtubeApi!!.videoInfo("mostPopular", 20)
-
     val youtubeApi : RetrofitInterface? = getClient()?.create(RetrofitInterface::class.java)
-
 }

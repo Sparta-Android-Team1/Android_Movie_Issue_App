@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android_movie_issue_app.constants.Constants
+import com.example.android_movie_issue_app.data.SearchChannels
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.data.SearchVideo
 import kotlinx.coroutines.launch
@@ -19,9 +20,10 @@ class RetrofitViewModel : ViewModel() {
     val videoDataList: LiveData<MutableList<SearchItem?>> = _videoDataList
     var nextPageToken: String? = null
     var prevPageToken: String? = null
-    fun communicateNetWork(channelID: String, maxResult: Int = 5) = viewModelScope.launch {
+    private fun communicateNetWork(channelID: String, genre: String, maxResult: Int = 5) = viewModelScope.launch {
 
-        val apiData: Call<SearchVideo> = RetrofitClient.youtubeApi!!.searchVideo(channelID, "예고편", maxResult)
+        val apiData: Call<SearchVideo> = RetrofitClient.youtubeApi!!.searchVideo(channelID, genre, maxResult)
+
 
         apiData.enqueue(object : Callback<SearchVideo> {
             override fun onResponse(call: Call<SearchVideo>, response: Response<SearchVideo>) {
@@ -41,8 +43,25 @@ class RetrofitViewModel : ViewModel() {
         })
     }
 
+    fun channelInfo(channelID: String) = viewModelScope.launch {
+        val apiData: Call<SearchChannels> = RetrofitClient.youtubeApi!!.searchChannels(channelID)
+        apiData.enqueue(object : Callback<SearchChannels> {
+            override fun onResponse(
+                call: Call<SearchChannels>,
+                response: Response<SearchChannels>
+            ) {
+                Log.i("Minyong", response.body().toString())
+            }
+
+            override fun onFailure(call: Call<SearchChannels>, t: Throwable) {
+                Log.i("Minyong", "fail")
+            }
+
+        })
+    }
+
     fun init() {
-        communicateNetWork(Constants.WARNER_BROS_ID)
-        communicateNetWork(Constants.NETFLIX_ID)
+        communicateNetWork(Constants.WARNER_BROS_ID, "sf")
+        communicateNetWork(Constants.NETFLIX_ID, "sf")
     }
 }
