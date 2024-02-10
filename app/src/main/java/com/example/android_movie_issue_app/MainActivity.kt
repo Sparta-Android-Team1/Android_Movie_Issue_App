@@ -26,6 +26,8 @@ import com.example.android_movie_issue_app.data.VideoInfo
 import com.example.android_movie_issue_app.databinding.ActivityMainBinding
 import com.example.android_movie_issue_app.retrofit.RetrofitClient
 import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,10 +68,10 @@ class MainActivity : AppCompatActivity() {
         Log.d("MainActivity","#csh navController")
     }
 
-    private fun communicateNetWork() = lifecycleScope.launch {
-        val apiData = RetrofitClient.youtubeApi?.searchVideo("mostPopular", 20)
-
-        apiData!!.items.forEach { it ->
+//    private fun communicateNetWork() = lifecycleScope.launch {
+    private fun communicateNetWork() = CoroutineScope(Dispatchers.IO).launch(){
+        val apiData = RetrofitClient.youtubeApi?.videoInfo("mostPopular", 20)
+    apiData.items.forEach { it ->
             val item= ItemData(it.snippet.thumbnails.default.url,it.snippet.title, it.snippet.channelTitle)
             homeData.add(item) }
         Log.d("MainActivity","#csh data=$homeData")
