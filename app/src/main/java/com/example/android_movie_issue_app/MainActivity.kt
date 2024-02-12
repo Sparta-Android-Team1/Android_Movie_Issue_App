@@ -10,8 +10,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.android_movie_issue_app.constants.Constants
+import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.ActivityMainBinding
 import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
+import com.google.gson.Gson
+import com.google.gson.JsonParseException
+import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         RetrofitViewModel.init()
+        //saveData()
+        loadData()
         RetrofitViewModel.channelInfo(Constants.NETFLIX_ID)
 
         val navView: BottomNavigationView = binding.navView
@@ -41,5 +47,32 @@ class MainActivity : AppCompatActivity() {
         )
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    private fun saveData() {
+        val pref = getSharedPreferences(Constants.PREFERENCE_KEY, 0)
+        val edit = pref.edit()
+
+        val gson = Gson()
+        val json = gson.toJson(RetrofitViewModel.videoItems)
+
+        edit.putString(Constants.DATA_KEY, json)
+        edit.apply()
+    }
+
+    private fun loadData() {
+        val pref = getSharedPreferences(Constants.PREFERENCE_KEY, 0)
+        if (pref.contains(Constants.DATA_KEY)) {
+            val gson = Gson()
+            val json = pref.getString(Constants.DATA_KEY, "")
+            try {
+                val typeToken = object : TypeToken<MutableMap<String, MutableList<SearchItem>>>() {}.type
+                var storeMap = mutableMapOf<String, MutableList<SearchItem>>()
+                storeMap = gson.fromJson(json, typeToken)
+                RetrofitViewModel.loadData(storeMap)
+            } catch (e: JsonParseException) {
+                e.printStackTrace()
+            }
+        }
     }
 }

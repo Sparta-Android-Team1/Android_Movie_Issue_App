@@ -10,6 +10,7 @@ import com.example.android_movie_issue_app.constants.Constants
 import com.example.android_movie_issue_app.data.SearchChannels
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.data.SearchVideo
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,12 +27,8 @@ class RetrofitViewModel : ViewModel() {
     var nextPageToken: String? = null
     var prevPageToken: String? = null
 
-    fun GetVideoItems() {
-//        videoItems.value.values.forEach {
-//            it.forEach {
-//                it.id.videoId
-//            }
-//        }
+    fun loadData(itemList: MutableMap<String, MutableList<SearchItem>>) {
+        _videoItems.value = itemList
     }
     private fun communicateNetWork2(channelList: MutableList<String>, genreList: MutableList<String>, maxResult: Int = 5) = viewModelScope.launch {
 
