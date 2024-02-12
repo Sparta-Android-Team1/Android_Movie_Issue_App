@@ -45,9 +45,9 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         RetrofitViewModel.videoItems.observe(viewLifecycleOwner) {
             it.forEach{index ->
-                index.value.forEach { t ->
-                    Log.i("Minyong", t.snippet.channelId)
-                }
+//                index.value.forEach { t ->
+//                    Log.i("Minyong", t.snippet.channelTitle)
+//                }
             }
             Log.i("Minyong", "------------------------")
         }

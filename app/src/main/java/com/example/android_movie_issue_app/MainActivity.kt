@@ -30,10 +30,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        RetrofitViewModel.init()
-        //saveData()
+//        RetrofitViewModel.videoItems.observe(this){
+//            saveData()
+//        }
+//        RetrofitViewModel.init()
+
         loadData()
-        RetrofitViewModel.channelInfo(Constants.NETFLIX_ID)
+        //RetrofitViewModel.channelInfo(Constants.NETFLIX_ID)
 
         val navView: BottomNavigationView = binding.navView
 
@@ -54,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         val edit = pref.edit()
 
         val gson = Gson()
-        val json = gson.toJson(RetrofitViewModel.videoItems)
+        val json = gson.toJson(RetrofitViewModel.videoItems.value)
 
         edit.putString(Constants.DATA_KEY, json)
         edit.apply()
