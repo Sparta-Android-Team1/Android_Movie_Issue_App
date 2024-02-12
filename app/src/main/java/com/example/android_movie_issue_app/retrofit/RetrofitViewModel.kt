@@ -34,13 +34,15 @@ class RetrofitViewModel : ViewModel() {
                 response.body()?.items?.forEach {
                     currentList.add(it)
                 }
+                Log.d("ViewModel","#csh currentList=$currentList")
                 _videoDataList.value = currentList
             }
 
             override fun onFailure(call: Call<SearchVideo>, t: Throwable) {
-                Log.i("Minyong", "fail")
+                Log.i("ViewModel", "csh fail")
             }
         })
+        Log.d("ViewModel","")
     }
 
     fun channelInfo(channelID: String) = viewModelScope.launch {
@@ -50,11 +52,12 @@ class RetrofitViewModel : ViewModel() {
                 call: Call<SearchChannels>,
                 response: Response<SearchChannels>
             ) {
-                Log.i("Minyong", response.body().toString())
+                Log.d("ViewModel", "csh channelInfo")
+                Log.d("ViewModel", "csh ${response.body().toString()}")
             }
 
             override fun onFailure(call: Call<SearchChannels>, t: Throwable) {
-                Log.i("Minyong", "fail")
+                Log.i("ViewModel", "csh fail")
             }
 
         })
