@@ -57,6 +57,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        RetrofitViewModel.videoItems.observe(viewLifecycleOwner) {
+            it.forEach{index ->
+//                index.value.forEach { t ->
+//                    Log.i("Minyong", t.snippet.channelTitle)
+//                }
         RetrofitViewModel.videoDataList.observe(viewLifecycleOwner) {
             Log.d("Home","#csh check")
             dataItem.clear()
@@ -86,6 +91,7 @@ class HomeFragment : Fragment() {
                     startActivity((intent))
                 }
             }
+            Log.i("Minyong", "------------------------")
         }
     }
 
