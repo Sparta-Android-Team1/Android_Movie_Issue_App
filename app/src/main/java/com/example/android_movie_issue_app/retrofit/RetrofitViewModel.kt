@@ -16,14 +16,62 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RetrofitViewModel : ViewModel() {
+
     private val _videoDataList : MutableLiveData<MutableList<SearchItem?>> = MutableLiveData()
     val videoDataList: LiveData<MutableList<SearchItem?>> = _videoDataList
+
+    private var _videoItems: MutableLiveData<MutableMap<String, MutableList<SearchItem>>> = MutableLiveData()
+    val videoItems: LiveData<MutableMap<String, MutableList<SearchItem>>> = _videoItems
+
     var nextPageToken: String? = null
     var prevPageToken: String? = null
+
+    fun GetVideoItems() {
+//        videoItems.value.values.forEach {
+//            it.forEach {
+//                it.id.videoId
+//            }
+//        }
+    }
+    private fun communicateNetWork2(channelList: MutableList<String>, genreList: MutableList<String>, maxResult: Int = 5) = viewModelScope.launch {
+
+        channelList.forEach {
+            genreList.forEach {genre ->
+                val apiData: Call<SearchVideo> = RetrofitClient.youtubeApi!!.searchVideo(it, genre, maxResult)
+
+                apiData.enqueue(object : Callback<SearchVideo> {
+                    override fun onResponse(
+                        call: Call<SearchVideo>,
+                        response: Response<SearchVideo>
+                    ) {
+                        nextPageToken = response.body()?.nextPageToken
+                        prevPageToken = response.body()?.prevPageToken
+
+                        val currentList = _videoItems.value?.toMutableMap() ?: mutableMapOf()
+                        response.body()?.items?.forEach {
+                            if (currentList[genre] != null) {
+                                currentList[genre]?.add(it)
+                            } else {
+                                val test = mutableListOf<SearchItem>()
+                                test.add(it)
+                                test.distinctBy { t -> t.id.videoId }
+                                currentList[genre] = test
+                            }
+                        }
+                        _videoItems.value = currentList
+                    }
+
+                    override fun onFailure(call: Call<SearchVideo>, t: Throwable) {
+                        Log.i("Minyong", "fail")
+                    }
+                })
+            }
+        }
+    }
+
     private fun communicateNetWork(channelID: String, genre: String, maxResult: Int = 5) = viewModelScope.launch {
 
         val apiData: Call<SearchVideo> = RetrofitClient.youtubeApi!!.searchVideo(channelID, genre, maxResult)
-
 
         apiData.enqueue(object : Callback<SearchVideo> {
             override fun onResponse(call: Call<SearchVideo>, response: Response<SearchVideo>) {
@@ -61,7 +109,9 @@ class RetrofitViewModel : ViewModel() {
     }
 
     fun init() {
-        communicateNetWork(Constants.WARNER_BROS_ID, "sf")
-        communicateNetWork(Constants.NETFLIX_ID, "sf")
+//        communicateNetWork2(Constants.WARNER_BROS_ID, "sf")
+//        communicateNetWork2(Constants.NETFLIX_ID, "sf")
+
+        communicateNetWork2(Constants.CHANNEL_ID_LIST, Constants.GENRE_LIST, 1)
     }
 }
