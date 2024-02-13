@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             val json = pref.getString(Constants.DATA_KEY, "")
             try {
                 val typeToken = object : TypeToken<MutableMap<String, MutableList<SearchItem>>>() {}.type
-                var storeMap = mutableMapOf<String, MutableList<SearchItem>>()
+                var storeMap = mutableMapOf<String, MutableList<SearchItem?>>()
                 storeMap = gson.fromJson(json, typeToken)
                 retrofitViewModel.loadData(storeMap)
             } catch (e: JsonParseException) {

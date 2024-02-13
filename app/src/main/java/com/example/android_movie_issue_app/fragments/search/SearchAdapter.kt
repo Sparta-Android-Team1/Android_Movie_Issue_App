@@ -10,10 +10,10 @@ import com.example.android_movie_issue_app.R
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.LayoutSearchItemBinding
 
-class SearchAdapter(private val list: MutableList<SearchItem>) : RecyclerView.Adapter<SearchAdapter.Holder>() {
+class SearchAdapter(private val list: MutableList<SearchItem?>) : RecyclerView.Adapter<SearchAdapter.Holder>() {
 
     interface ItemClick {
-        fun onClick(view: View, position: Int, data: SearchItem)
+        fun onClick(view: View, position: Int, data: SearchItem?)
     }
 
     var itemClick : ItemClick? = null
@@ -22,12 +22,12 @@ class SearchAdapter(private val list: MutableList<SearchItem>) : RecyclerView.Ad
         private val thumbNail = binding.ivThumbnail
         private val title = binding.tvTitle
 
-        fun bind(items: SearchItem) {
+        fun bind(items: SearchItem?) {
 
-            title.text = items.snippet.title
+            title.text = items?.snippet?.title
 
             Glide.with(itemView)
-                .load(items.snippet.thumbnails.medium.url)
+                .load(items?.snippet?.thumbnails?.medium?.url)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(thumbNail)
         }

@@ -24,13 +24,13 @@ class RetrofitViewModel : ViewModel() {
     private val _videoDataList : MutableLiveData<MutableList<SearchItem?>> = MutableLiveData()
     val videoDataList: LiveData<MutableList<SearchItem?>> = _videoDataList
 
-    private var _videoItems: MutableLiveData<MutableMap<String, MutableList<SearchItem>>> = MutableLiveData()
-    val videoItems: LiveData<MutableMap<String, MutableList<SearchItem>>> = _videoItems
+    private var _videoItems: MutableLiveData<MutableMap<String, MutableList<SearchItem?>>> = MutableLiveData()
+    val videoItems: LiveData<MutableMap<String, MutableList<SearchItem?>>> = _videoItems
 
     var nextPageToken: String? = null
     var prevPageToken: String? = null
 
-    fun loadData(itemList: MutableMap<String, MutableList<SearchItem>>) {
+    fun loadData(itemList: MutableMap<String, MutableList<SearchItem?>>) {
         _videoItems.value = itemList
     }
     private fun communicateNetWork2(channelList: MutableList<String>, genreList: MutableList<String>, maxResult: Int = 5) = viewModelScope.launch {
@@ -52,9 +52,9 @@ class RetrofitViewModel : ViewModel() {
                             if (currentList[genre] != null) {
                                 currentList[genre]?.add(it)
                             } else {
-                                var test = mutableListOf<SearchItem>()
+                                var test = mutableListOf<SearchItem?>()
                                 test.add(it)
-                                test = test.distinctBy { t -> t.id.videoId }.toMutableList()
+                                test = test.distinctBy { t -> t?.id?.videoId }.toMutableList()
                                 currentList[genre] = test
                             }
                         }

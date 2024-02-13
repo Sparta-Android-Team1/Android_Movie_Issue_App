@@ -1,6 +1,7 @@
 package com.example.android_movie_issue_app.fragments.search
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_movie_issue_app.MainActivity
+import com.example.android_movie_issue_app.activity.DetailActivity
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.FragmentSearchBinding
 import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
@@ -21,10 +23,16 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val retrofitViewModel by activityViewModels<RetrofitViewModel>()
     private val searchViewModel by activityViewModels<SearchViewModel>()
+    private lateinit var fragContext : Context
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        fragContext = context
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +56,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvSearchBtn.setOnClickListener {
-            var test: MutableList<SearchItem> = mutableListOf()
+            var test: MutableList<SearchItem?> = mutableListOf()
             val searchText = binding.etSearch.text.toString()
 
             retrofitViewModel.videoItems.value?.forEach { index ->
@@ -59,7 +67,7 @@ class SearchFragment : Fragment() {
                 }
 
                 index.value.forEach { t ->
-                    if (t.snippet.channelTitle.contains(searchText)
+                    if (t?.snippet?.channelTitle!!.contains(searchText)
                         || t.snippet.title.contains(searchText)
                         || t.snippet.description.contains(searchText)) {
                         //Log.i("Minyong", "test!!")
@@ -69,13 +77,16 @@ class SearchFragment : Fragment() {
                 }
             }
 
-            test = test.distinctBy { it.id.videoId }.toMutableList()
-            test.sortByDescending { it.snippet.publishedAt }
+            test = test.distinctBy { it?.id?.videoId }.toMutableList()
+            test.sortByDescending { it?.snippet?.publishedAt }
 
             val adapter = SearchAdapter(test)
             adapter.itemClick = object : SearchAdapter.ItemClick {
-                override fun onClick(view: View, position: Int, data: SearchItem) {
-                    (activity as MainActivity).changeActivity()
+                override fun onClick(view: View, position: Int, data: SearchItem?) {
+                    val intent = Intent(fragContext, DetailActivity::class.java)
+                    //(activity as MainActivity).changeActivity()
+                    intent.putExtra("dataFromFrag", test[position])
+                    startActivity(intent)
                 }
             }
             binding.recyclerSearch.adapter = adapter
