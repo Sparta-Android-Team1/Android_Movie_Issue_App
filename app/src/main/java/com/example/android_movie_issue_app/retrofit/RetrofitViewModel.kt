@@ -15,6 +15,9 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class RetrofitViewModel : ViewModel() {
 
@@ -79,13 +82,15 @@ class RetrofitViewModel : ViewModel() {
                 response.body()?.items?.forEach {
                     currentList.add(it)
                 }
+                Log.d("ViewModel","#csh currentList=$currentList")
                 _videoDataList.value = currentList
             }
 
             override fun onFailure(call: Call<SearchVideo>, t: Throwable) {
-                Log.i("Minyong", "fail")
+                Log.i("ViewModel", "csh fail")
             }
         })
+        Log.d("ViewModel","")
     }
 
     fun channelInfo(channelID: String) = viewModelScope.launch {
@@ -95,20 +100,21 @@ class RetrofitViewModel : ViewModel() {
                 call: Call<SearchChannels>,
                 response: Response<SearchChannels>
             ) {
-                Log.i("Minyong", response.body().toString())
+                Log.d("ViewModel", "csh channelInfo")
+                Log.d("ViewModel", "csh ${response.body().toString()}")
             }
 
             override fun onFailure(call: Call<SearchChannels>, t: Throwable) {
-                Log.i("Minyong", "fail")
+                Log.i("ViewModel", "csh fail")
             }
 
         })
     }
 
     fun init() {
-//        communicateNetWork2(Constants.WARNER_BROS_ID, "sf")
-//        communicateNetWork2(Constants.NETFLIX_ID, "sf")
+        communicateNetWork(Constants.WARNER_BROS_ID, "sf")
+        communicateNetWork(Constants.NETFLIX_ID, "sf")
 
-        communicateNetWork2(Constants.CHANNEL_ID_LIST, Constants.GENRE_LIST, 1)
+//        communicateNetWork2(Constants.CHANNEL_ID_LIST, Constants.GENRE_LIST, 1)
     }
 }

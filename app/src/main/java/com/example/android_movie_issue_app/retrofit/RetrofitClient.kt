@@ -14,7 +14,7 @@ object RetrofitClient {
     private var retrofitClient: Retrofit? = null
 
     fun getClient(): Retrofit? {
-        Log.d("Minyong", "RetrofitClient - getClient() called")
+        Log.d("Client", "csh RetrofitClient - getClient() called")
 
         if (retrofitClient == null) {
             retrofitClient = Retrofit.Builder()
