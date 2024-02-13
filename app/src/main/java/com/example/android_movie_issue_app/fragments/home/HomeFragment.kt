@@ -48,50 +48,40 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val textView: TextView = binding.textHome
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        RetrofitViewModel.videoItems.observe(viewLifecycleOwner) {
-            it.forEach{index ->
-//                index.value.forEach { t ->
-//                    Log.i("Minyong", t.snippet.channelTitle)
-//                }
+
         RetrofitViewModel.videoDataList.observe(viewLifecycleOwner) {
-            Log.d("Home","#csh check")
             dataItem.clear()
             it.forEach { index ->
                 if ((index?.snippet?.channelId == Constants.NETFLIX_ID) || (index?.snippet?.channelId == Constants.WARNER_BROS_ID)) {
                     Log.i("HomeFragment", "csh $index.toString()")
-                    val item=ItemData(index.snippet.thumbnails.default.url ,index.snippet.title,index.snippet.channelTitle, index.snippet.publishedAt)
+                    val item=ItemData(index.id.videoId, index.snippet.thumbnails.default.url ,index.snippet.title,index.snippet.channelTitle, index.snippet.publishedAt, index.snippet.description)
                     dataItem.add(item)
                 }
             }
-            Log.d("HomeFragment","data=$dataItem")
-            gridmanager= GridLayoutManager(mContext,2)
+//            Log.d("HomeFragment","data=$dataItem")
+
+            gridmanager= GridLayoutManager(mContext,2)  //세로 그리드뷰
             adapter= Adapter(mContext,it)
-//            adapter= Adapter(mContext, dataItem)
             binding.rvRankingList.adapter=adapter
             binding.rvRankingList.layoutManager=gridmanager
             binding.rvRankingList.itemAnimator=null     //아이템 깜빡임 방지
 
-            binding.rvRealTimeRanking.adapter=adapter
+            binding.rvRealTimeRanking.adapter=adapter   //가로 리사이클러뷰
             binding.rvRealTimeRanking.layoutManager=LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL, false)
 
             adapter.itemClick = object : Adapter.ItemClick {
                 override fun onClick(view: View, position: Int) {
                     val intent= Intent(mContext,DetailActivity::class.java)
                     intent.putExtra("dataFromFrag",dataItem[position])
-                    Log.d("HomeFragment","dataItem=${dataItem[position]}")
-                    startActivity((intent))
+//                    Log.d("HomeFragment","dataItem=${dataItem[position]}")
+                    startActivity(intent)
                 }
             }
-            Log.i("Minyong", "------------------------")
         }
     }
 

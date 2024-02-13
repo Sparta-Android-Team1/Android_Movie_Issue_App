@@ -15,6 +15,9 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class RetrofitViewModel : ViewModel() {
 
@@ -109,9 +112,9 @@ class RetrofitViewModel : ViewModel() {
     }
 
     fun init() {
-//        communicateNetWork2(Constants.WARNER_BROS_ID, "sf")
-//        communicateNetWork2(Constants.NETFLIX_ID, "sf")
+        communicateNetWork(Constants.WARNER_BROS_ID, "sf")
+        communicateNetWork(Constants.NETFLIX_ID, "sf")
 
-        communicateNetWork2(Constants.CHANNEL_ID_LIST, Constants.GENRE_LIST, 1)
+//        communicateNetWork2(Constants.CHANNEL_ID_LIST, Constants.GENRE_LIST, 1)
     }
 }

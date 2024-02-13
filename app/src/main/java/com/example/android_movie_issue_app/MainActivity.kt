@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 //        RetrofitViewModel.videoItems.observe(this){
 //            saveData()
 //        }
-//        RetrofitViewModel.init()
+        RetrofitViewModel.init()
 
         loadData()
         //RetrofitViewModel.channelInfo(Constants.NETFLIX_ID)

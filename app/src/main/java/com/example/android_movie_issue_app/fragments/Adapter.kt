@@ -4,13 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.android_movie_issue_app.data.ItemData
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.LayoutRecyclerciewBigitemBinding
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Date
 
-//class Adapter(private val mContext: Context, val mItems: MutableList<ItemData>): RecyclerView.Adapter<Adapter.Holder>() {
 class Adapter(private val mContext: Context, val mItems: MutableList<SearchItem?>): RecyclerView.Adapter<Adapter.Holder>() {
 
     interface ItemClick {
@@ -18,10 +21,6 @@ class Adapter(private val mContext: Context, val mItems: MutableList<SearchItem?
     }
 
     var itemClick : ItemClick? = null
-
-    var items = mutableListOf<ItemData>()
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = LayoutRecyclerciewBigitemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -31,9 +30,6 @@ class Adapter(private val mContext: Context, val mItems: MutableList<SearchItem?
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
-//            val intent = Intent(mContext, DetailActivity::class.java)
-//            intent.putExtra("dataFromHome",mItems[position])
-//            startActivity(intent)
         }
 
         Glide.with(mContext)
@@ -41,16 +37,6 @@ class Adapter(private val mContext: Context, val mItems: MutableList<SearchItem?
             .into(holder.thumbnail)
 
         holder.title.text=mItems[position]?.snippet?.title
-
-//        Glide.with(mContext)
-//            .load(mItems[position].thumbnail)
-////            .placeholder(R.drawable.ic_launcher_background)
-////            .error(R.drawable.ic_launcher_background)
-////            .fallback(R.drawable.ic_launcher_background)
-////            .circleCrop()
-//            .into(holder.thumbnail)
-//
-//        holder.title.text=mItems[position].movieTitle
     }
 
     override fun getItemCount() = mItems.size

@@ -70,4 +70,7 @@ dependencies {
 
     //splashscreen api
     implementation("androidx.core:core-splashscreen:1.1.0-alpha02")
+
+    //player
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
 }
