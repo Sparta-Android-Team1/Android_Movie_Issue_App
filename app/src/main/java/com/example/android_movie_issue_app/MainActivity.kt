@@ -1,17 +1,25 @@
 package com.example.android_movie_issue_app
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.android_movie_issue_app.activity.DetailActivity
 import com.example.android_movie_issue_app.constants.Constants
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.ActivityMainBinding
+import com.example.android_movie_issue_app.fragments.search.SearchViewModel
 import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
@@ -21,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var splashScreen: SplashScreen
-    private val RetrofitViewModel by viewModels<RetrofitViewModel>()
+    private val retrofitViewModel by viewModels<RetrofitViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,14 +58,31 @@ class MainActivity : AppCompatActivity() {
         )
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+
+        if (currentFocus is EditText) {
+            currentFocus!!.clearFocus()
+        }
+
+        return super.dispatchTouchEvent(ev)
+    }
+
+    fun changeActivity() {
+        val intent = Intent(this, DetailActivity::class.java)
+        startActivity(intent)
+    }
     private fun saveData() {
         val pref = getSharedPreferences(Constants.PREFERENCE_KEY, 0)
         val edit = pref.edit()
 
         val gson = Gson()
-        val json = gson.toJson(RetrofitViewModel.videoItems.value)
+        val json = gson.toJson(retrofitViewModel.videoItems.value)
 
         edit.putString(Constants.DATA_KEY, json)
         edit.apply()
@@ -72,10 +97,11 @@ class MainActivity : AppCompatActivity() {
                 val typeToken = object : TypeToken<MutableMap<String, MutableList<SearchItem>>>() {}.type
                 var storeMap = mutableMapOf<String, MutableList<SearchItem>>()
                 storeMap = gson.fromJson(json, typeToken)
-                RetrofitViewModel.loadData(storeMap)
+                retrofitViewModel.loadData(storeMap)
             } catch (e: JsonParseException) {
                 e.printStackTrace()
             }
         }
     }
+
 }

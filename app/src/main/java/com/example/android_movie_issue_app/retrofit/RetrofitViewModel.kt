@@ -49,9 +49,9 @@ class RetrofitViewModel : ViewModel() {
                             if (currentList[genre] != null) {
                                 currentList[genre]?.add(it)
                             } else {
-                                val test = mutableListOf<SearchItem>()
+                                var test = mutableListOf<SearchItem>()
                                 test.add(it)
-                                test.distinctBy { t -> t.id.videoId }
+                                test = test.distinctBy { t -> t.id.videoId }.toMutableList()
                                 currentList[genre] = test
                             }
                         }
@@ -106,9 +106,6 @@ class RetrofitViewModel : ViewModel() {
     }
 
     fun init() {
-//        communicateNetWork2(Constants.WARNER_BROS_ID, "sf")
-//        communicateNetWork2(Constants.NETFLIX_ID, "sf")
-
-        communicateNetWork2(Constants.CHANNEL_ID_LIST, Constants.GENRE_LIST, 1)
+        communicateNetWork2(Constants.CHANNEL_ID_LIST, Constants.GENRE_LIST, 50)
     }
 }
