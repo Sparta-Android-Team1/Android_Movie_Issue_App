@@ -1,6 +1,8 @@
 package com.example.android_movie_issue_app.data
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class VideoInfo(
     @SerializedName("kind")
@@ -38,19 +40,19 @@ data class Snippet(
     var tags: List<String>, // 동영상과 연결된 키워드 태그 목록
 )
 
+@Parcelize
 data class Thumbnails(
     @SerializedName("default")
-    val default: Default, // 기본 썸네일 이미지, 가로 120, 세로 90 픽셀
+    val default: Default?, // 기본 썸네일 이미지, 가로 120, 세로 90 픽셀
     @SerializedName("high")
-    val high: High, // 썸네일 이미지의 고해상도 버전 480x360 픽셀
-    @SerializedName("maxres")
-    val maxres: Maxres, // 썸네일 이미지의 가장 높은 해상도 버전 가로 1280, 세로 720 픽셀
+    val high: High?, // 썸네일 이미지의 고해상도 버전 480x360 픽셀
     @SerializedName("medium")
-    val medium: Medium, // 320x180 픽셀
+    val medium: Medium?, // 320x180 픽셀
     @SerializedName("standard")
-    val standard: Standard // 해상도 이미지보다 훨씬 더 높은 해상도의 썸네일 이미지, 640x480 픽셀
-)
+    val standard: Standard? // 해상도 이미지보다 훨씬 더 높은 해상도의 썸네일 이미지, 640x480 픽셀
+): Parcelable
 
+@Parcelize
 data class Default(
     @SerializedName("height")
     val height: Int,
@@ -58,8 +60,8 @@ data class Default(
     val url: String,
     @SerializedName("width")
     val width: Int
-)
-
+): Parcelable
+@Parcelize
 data class High(
     @SerializedName("height")
     val height: Int,
@@ -67,17 +69,9 @@ data class High(
     val url: String,
     @SerializedName("width")
     val width: Int
-)
+): Parcelable
 
-data class Maxres(
-    @SerializedName("height")
-    val height: Int,
-    @SerializedName("url")
-    val url: String,
-    @SerializedName("width")
-    val width: Int
-)
-
+@Parcelize
 data class Medium(
     @SerializedName("height")
     val height: Int,
@@ -85,8 +79,8 @@ data class Medium(
     val url: String,
     @SerializedName("width")
     val width: Int
-)
-
+): Parcelable
+@Parcelize
 data class Standard(
     @SerializedName("height")
     val height: Int,
@@ -94,4 +88,4 @@ data class Standard(
     val url: String,
     @SerializedName("width")
     val width: Int
-)
+): Parcelable

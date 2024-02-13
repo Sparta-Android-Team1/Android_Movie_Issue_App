@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_movie_issue_app.activity.DetailActivity
 import com.example.android_movie_issue_app.constants.Constants
 import com.example.android_movie_issue_app.data.ItemData
+import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.FragmentHomeBinding
 import com.example.android_movie_issue_app.fragments.Adapter
 import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
@@ -27,7 +28,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private val RetrofitViewModel by activityViewModels<RetrofitViewModel>()
-    var dataItem=mutableListOf<ItemData>()
+    var dataItem=mutableListOf<SearchItem?>()
     private lateinit var adapter: Adapter
     private lateinit var gridmanager: GridLayoutManager
     private lateinit var mContext: Context
@@ -54,39 +55,39 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        RetrofitViewModel.videoDataList.observe(viewLifecycleOwner) {
-            dataItem.clear()
-            it.forEach { index ->
-                if ((index?.snippet?.channelId == Constants.NETFLIX_ID) || (index?.snippet?.channelId == Constants.WARNER_BROS_ID)) {
-                    Log.i("HomeFragment", "csh $index.toString()")
-                    val item=ItemData(index.id.videoId, index.snippet.thumbnails.default.url ,index.snippet.title,index.snippet.channelTitle, index.snippet.publishedAt, index.snippet.description)
-                    dataItem.add(item)
+            RetrofitViewModel.videoItems.observe(viewLifecycleOwner) {
+                dataItem.clear()
+                it.forEach { index ->
+                    index.value.forEach {t ->
+                        dataItem.add(t)
+                    }
                 }
-            }
+
 //            Log.d("HomeFragment","data=$dataItem")
+                gridmanager = GridLayoutManager(mContext, 2)  //세로 그리드뷰
+                adapter = Adapter(mContext, dataItem)
+                binding.rvRankingList.adapter = adapter
+                binding.rvRankingList.layoutManager = gridmanager
+                binding.rvRankingList.itemAnimator = null     //아이템 깜빡임 방지
 
-            gridmanager= GridLayoutManager(mContext,2)  //세로 그리드뷰
-            adapter= Adapter(mContext,it)
-            binding.rvRankingList.adapter=adapter
-            binding.rvRankingList.layoutManager=gridmanager
-            binding.rvRankingList.itemAnimator=null     //아이템 깜빡임 방지
+                binding.rvRealTimeRanking.adapter = adapter   //가로 리사이클러뷰
+                binding.rvRealTimeRanking.layoutManager =
+                    LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
 
-            binding.rvRealTimeRanking.adapter=adapter   //가로 리사이클러뷰
-            binding.rvRealTimeRanking.layoutManager=LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL, false)
-
-            adapter.itemClick = object : Adapter.ItemClick {
-                override fun onClick(view: View, position: Int) {
-                    val intent= Intent(mContext,DetailActivity::class.java)
-                    intent.putExtra("dataFromFrag",dataItem[position])
-//                    Log.d("HomeFragment","dataItem=${dataItem[position]}")
-                    startActivity(intent)
+                adapter.itemClick = object : Adapter.ItemClick {
+                    override fun onClick(view: View, position: Int) {
+                        val intent = Intent(mContext, DetailActivity::class.java)
+                        intent.putExtra("dataFromFrag", dataItem[position])
+                        Log.d("HomeFragment","dataItem=${dataItem[position]}")
+                        startActivity(intent)
+                    }
                 }
             }
         }
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
     }
-}
