@@ -20,10 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 class RetrofitViewModel : ViewModel() {
-
-    private val _videoDataList : MutableLiveData<MutableList<SearchItem?>> = MutableLiveData()
-    val videoDataList: LiveData<MutableList<SearchItem?>> = _videoDataList
-
+    
     private var _videoItems: MutableLiveData<MutableMap<String, MutableList<SearchItem?>>> = MutableLiveData()
     val videoItems: LiveData<MutableMap<String, MutableList<SearchItem?>>> = _videoItems
 
@@ -69,29 +66,6 @@ class RetrofitViewModel : ViewModel() {
         }
     }
 
-    private fun communicateNetWork(channelID: String, genre: String, maxResult: Int = 5) = viewModelScope.launch {
-
-        val apiData: Call<SearchVideo> = RetrofitClient.youtubeApi!!.searchVideo(channelID, genre, maxResult)
-
-        apiData.enqueue(object : Callback<SearchVideo> {
-            override fun onResponse(call: Call<SearchVideo>, response: Response<SearchVideo>) {
-                nextPageToken = response.body()?.nextPageToken
-                prevPageToken = response.body()?.prevPageToken
-
-                val currentList = _videoDataList.value?.toMutableList() ?: mutableListOf()
-                response.body()?.items?.forEach {
-                    currentList.add(it)
-                }
-                Log.d("ViewModel","#csh currentList=$currentList")
-                _videoDataList.value = currentList
-            }
-
-            override fun onFailure(call: Call<SearchVideo>, t: Throwable) {
-                Log.i("ViewModel", "csh fail")
-            }
-        })
-        Log.d("ViewModel","")
-    }
 
     fun channelInfo(channelID: String) = viewModelScope.launch {
         val apiData: Call<SearchChannels> = RetrofitClient.youtubeApi!!.searchChannels(channelID)
