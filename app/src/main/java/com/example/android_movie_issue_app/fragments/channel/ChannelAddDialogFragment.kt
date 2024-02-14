@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_movie_issue_app.R
 import com.example.android_movie_issue_app.constants.Constants
+import com.example.android_movie_issue_app.data.ChannelListItem
 import com.example.android_movie_issue_app.databinding.LayoutChannelDialogBinding
 import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
 import com.google.gson.Gson
@@ -24,7 +25,7 @@ class ChannelAddDialogFragment : DialogFragment() {
     private val channelViewModel: ChannelViewModel by activityViewModels() //viewModels()
     private val retrofitViewModel: RetrofitViewModel by activityViewModels()
 
-    private var channelList = mutableListOf<ChannelItem>()
+    private var channelList = mutableListOf<ChannelListItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +101,7 @@ class ChannelAddDialogFragment : DialogFragment() {
     }
 
 
-    private fun saveChannel(item: ChannelItem) {
+    private fun saveChannel(item: ChannelListItem) {
         val pref = requireContext().getSharedPreferences(Constants.CHANNEL_PREFERENCE_KEY, 0)
         val edit = pref?.edit()
         val subscriptionChannel = Gson().toJson(item)
@@ -108,7 +109,7 @@ class ChannelAddDialogFragment : DialogFragment() {
         edit?.apply()
     }
 
-    private fun removeChannel(item: ChannelItem) {
+    private fun removeChannel(item: ChannelListItem) {
         val pref = requireContext().getSharedPreferences(Constants.CHANNEL_PREFERENCE_KEY, 0)
         val edit = pref?.edit()
         edit?.remove(item.channelId)
@@ -125,16 +126,16 @@ class ChannelAddDialogFragment : DialogFragment() {
         val pref = requireContext().getSharedPreferences(Constants.CHANNEL_PREFERENCE_KEY, 0)
         val channelIds = pref.all.keys
 
-        channelList.add(ChannelItem(R.drawable.channel_cjenm, getString(R.string.cjenm), Constants.CJENM_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_marvel, getString(R.string.marvel), Constants.Marvel_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_paramount, getString(R.string.paramount), Constants.PARAMOUNT_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_warner, getString(R.string.warner), Constants.WARNER_BROS_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_netflix, getString(R.string.netflix), Constants.NETFLIX_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_disney, getString(R.string.disney), Constants.DISNEY_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_lotte, getString(R.string.lotte), Constants.LOTTE_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_sony, getString(R.string.sony), Constants.SONY_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_showbox, getString(R.string.showbox), Constants.SHOWBOX_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_universal, getString(R.string.universal), Constants.UNIVERSAL_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_cjenm, getString(R.string.cjenm), Constants.CJENM_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_marvel, getString(R.string.marvel), Constants.Marvel_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_paramount, getString(R.string.paramount), Constants.PARAMOUNT_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_warner, getString(R.string.warner), Constants.WARNER_BROS_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_netflix, getString(R.string.netflix), Constants.NETFLIX_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_disney, getString(R.string.disney), Constants.DISNEY_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_lotte, getString(R.string.lotte), Constants.LOTTE_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_sony, getString(R.string.sony), Constants.SONY_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_showbox, getString(R.string.showbox), Constants.SHOWBOX_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_universal, getString(R.string.universal), Constants.UNIVERSAL_ID, false))
 
 
         for (channelItem in channelList) {

@@ -1,10 +1,5 @@
 package com.example.android_movie_issue_app.activity
 
-import android.content.Context
-import android.app.ActivityManager
-import android.content.Intent
-import android.content.res.Configuration
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -13,41 +8,24 @@ import android.util.Log
 import androidx.activity.viewModels
 import com.example.android_movie_issue_app.R
 import com.example.android_movie_issue_app.databinding.ActivityDetailBinding
-import com.example.android_movie_issue_app.databinding.ActivityMainBinding
-import com.example.android_movie_issue_app.fragments.search.SearchViewModel
-import android.util.Log
-import androidx.core.net.toUri
-import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
-import com.example.android_movie_issue_app.data.ItemData
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import com.example.android_movie_issue_app.MainActivity
 import com.example.android_movie_issue_app.constants.ViewModelManager
-import com.example.android_movie_issue_app.data.ItemData
-import com.example.android_movie_issue_app.data.SearchItem
-import com.example.android_movie_issue_app.fragments.mypage.MyPageViewModel
-import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
 import com.example.android_movie_issue_app.constants.Constants
-import com.example.android_movie_issue_app.fragments.channel.ChannelItem
+import com.example.android_movie_issue_app.data.ChannelListItem
 import com.example.android_movie_issue_app.fragments.channel.ChannelViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 
 class DetailActivity : AppCompatActivity() {
-    private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
     private val retrofitViewModel by viewModels<RetrofitViewModel>()
-
-    private val retrofitViewModel: RetrofitViewModel by viewModels()
+    //private val retrofitViewModel: RetrofitViewModel by viewModels()
     private val channelViewModel by viewModels<ChannelViewModel>()
-    private var channelList = mutableListOf<ChannelItem>()
-
+    private var channelList = mutableListOf<ChannelListItem>()
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
     //private val myPageViewModel by viewModels<MyPageViewModel>()
     private var isLike = false
@@ -154,16 +132,16 @@ class DetailActivity : AppCompatActivity() {
         val pref = getSharedPreferences(Constants.CHANNEL_PREFERENCE_KEY, 0)
         val channelIds = pref.all.keys
 
-        channelList.add(ChannelItem(R.drawable.channel_cjenm, getString(R.string.cjenm), Constants.CJENM_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_marvel, getString(R.string.marvel), Constants.Marvel_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_paramount, getString(R.string.paramount), Constants.PARAMOUNT_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_warner, getString(R.string.warner), Constants.WARNER_BROS_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_netflix, getString(R.string.netflix), Constants.NETFLIX_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_disney, getString(R.string.disney), Constants.DISNEY_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_lotte, getString(R.string.lotte), Constants.LOTTE_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_sony, getString(R.string.sony), Constants.SONY_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_showbox, getString(R.string.showbox), Constants.SHOWBOX_ID, false))
-        channelList.add(ChannelItem(R.drawable.channel_universal, getString(R.string.universal), Constants.UNIVERSAL_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_cjenm, getString(R.string.cjenm), Constants.CJENM_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_marvel, getString(R.string.marvel), Constants.Marvel_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_paramount, getString(R.string.paramount), Constants.PARAMOUNT_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_warner, getString(R.string.warner), Constants.WARNER_BROS_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_netflix, getString(R.string.netflix), Constants.NETFLIX_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_disney, getString(R.string.disney), Constants.DISNEY_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_lotte, getString(R.string.lotte), Constants.LOTTE_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_sony, getString(R.string.sony), Constants.SONY_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_showbox, getString(R.string.showbox), Constants.SHOWBOX_ID, false))
+        channelList.add(ChannelListItem(R.drawable.channel_universal, getString(R.string.universal), Constants.UNIVERSAL_ID, false))
 
 
         for (channelItem in channelList) {
@@ -175,7 +153,7 @@ class DetailActivity : AppCompatActivity() {
         Log.d("채널세팅검사", "${channelViewModel.channelList.value}")
     }
 
-    private fun saveChannel(item: ChannelItem) {
+    private fun saveChannel(item: ChannelListItem) {
         val pref = getSharedPreferences(Constants.CHANNEL_PREFERENCE_KEY, 0)
         val edit = pref?.edit()
         val subscriptionChannel = Gson().toJson(item)
@@ -183,7 +161,7 @@ class DetailActivity : AppCompatActivity() {
         edit?.apply()
     }
 
-    private fun removeChannel(item: ChannelItem) {
+    private fun removeChannel(item: ChannelListItem) {
         val pref = getSharedPreferences(Constants.CHANNEL_PREFERENCE_KEY, 0)
         val edit = pref?.edit()
         edit?.remove(item.channelId)

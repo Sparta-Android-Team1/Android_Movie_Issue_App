@@ -4,21 +4,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.android_movie_issue_app.data.ChannelListItem
 import com.example.android_movie_issue_app.data.SearchItem
 
 class ChannelViewModel : ViewModel() {
 
-    private val _channelList : MutableLiveData<List<ChannelItem>> = MutableLiveData()
-    val channelList: LiveData<List<ChannelItem>> get() = _channelList
+    private val _channelList : MutableLiveData<List<ChannelListItem>> = MutableLiveData()
+    val channelList: LiveData<List<ChannelListItem>> get() = _channelList
 
-    private val _subscriptionList : MutableLiveData<List<ChannelItem>> = MutableLiveData(mutableListOf())
-    val subscriptionList : LiveData<List<ChannelItem>> get() = _subscriptionList
+    private val _subscriptionList : MutableLiveData<List<ChannelListItem>> = MutableLiveData(mutableListOf())
+    val subscriptionList : LiveData<List<ChannelListItem>> get() = _subscriptionList
 
     private val _channelVideo : MutableLiveData<List<SearchItem>> = MutableLiveData()
     val channelVideo: LiveData<List<SearchItem>> = _channelVideo
 
 
-    fun addChannelList(dataList: List<ChannelItem>) {
+    fun addChannelList(dataList: List<ChannelListItem>) {
         _channelList.value = dataList
     }
 
@@ -28,7 +29,7 @@ class ChannelViewModel : ViewModel() {
         } ?: mutableListOf()
     }
 
-    fun addSubscription(channelData: ChannelItem) {
+    fun addSubscription(channelData: ChannelListItem) {
         val distinctList = _subscriptionList.value?.toMutableList()?.apply {
             if (!contains(channelData)) {
                 add(0,channelData)

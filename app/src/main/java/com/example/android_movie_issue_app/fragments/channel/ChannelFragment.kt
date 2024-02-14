@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_movie_issue_app.activity.DetailActivity
 import com.example.android_movie_issue_app.constants.Constants
+import com.example.android_movie_issue_app.data.ChannelListItem
 import com.example.android_movie_issue_app.databinding.FragmentChannelBinding
 import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
 import com.google.gson.Gson
@@ -130,7 +131,7 @@ class ChannelFragment : Fragment() {
         val allItems: Map<String, *> = pref.all
         for ((_, value) in allItems) {
             if (value is String) {
-                val channelData = Gson().fromJson(value, ChannelItem::class.java)
+                val channelData = Gson().fromJson(value, ChannelListItem::class.java)
                 channelViewModel.addSubscription(channelData)
             }
         }

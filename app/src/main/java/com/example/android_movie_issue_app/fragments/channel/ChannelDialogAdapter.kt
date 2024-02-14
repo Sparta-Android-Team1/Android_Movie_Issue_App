@@ -8,17 +8,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android_movie_issue_app.data.ChannelListItem
 import com.example.android_movie_issue_app.databinding.LayoutChannelDialogItemBinding
 
 
-class ChannelDialogAdapter : ListAdapter<ChannelItem,ChannelDialogAdapter.Holder>(diffUtil) {
+class ChannelDialogAdapter : ListAdapter<ChannelListItem,ChannelDialogAdapter.Holder>(diffUtil) {
     interface ItemClick {
         fun onClick(view: View, position: Int)
     }
     var itemClick: ItemClick? = null
 
     inner class Holder(val binding: LayoutChannelDialogItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: ChannelItem) {
+        fun bind(data: ChannelListItem) {
             with(binding) {
                 ivLogo.setImageResource(data.logo)
                 tvTitle.text = data.title
@@ -51,12 +52,12 @@ class ChannelDialogAdapter : ListAdapter<ChannelItem,ChannelDialogAdapter.Holder
     }
 
     companion object{
-        private val diffUtil = object : DiffUtil.ItemCallback<ChannelItem>() {
-            override fun areItemsTheSame(oldItem: ChannelItem, newItem: ChannelItem): Boolean {
+        private val diffUtil = object : DiffUtil.ItemCallback<ChannelListItem>() {
+            override fun areItemsTheSame(oldItem: ChannelListItem, newItem: ChannelListItem): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ChannelItem, newItem: ChannelItem): Boolean {
+            override fun areContentsTheSame(oldItem: ChannelListItem, newItem: ChannelListItem): Boolean {
                 return oldItem == newItem
             }
         }
