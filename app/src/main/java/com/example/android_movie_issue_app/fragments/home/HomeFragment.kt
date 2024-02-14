@@ -34,6 +34,13 @@ class HomeFragment : Fragment() {
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var gridmanager: GridLayoutManager
     private lateinit var mContext: Context
+    var sf=mutableListOf<SearchItem?>()
+    var action=mutableListOf<SearchItem?>()
+    var comedy=mutableListOf<SearchItem?>()
+    var adventure=mutableListOf<SearchItem?>()
+    var animation=mutableListOf<SearchItem?>()
+    var romance=mutableListOf<SearchItem?>()
+    var music=mutableListOf<SearchItem?>()
 
     override fun onAttach(context: Context) {
         Log.d("HomeFragment","#csh First onAttach")
@@ -58,13 +65,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
             RetrofitViewModel.videoItems.observe(viewLifecycleOwner) {
-                val sf=it["sf"]
-                val action=it["액션"]
-                val comedy=it["코미디"]
-                val adventure=it["모험"]
-                val animation=it["애니메이션"]
-                val romance=it["로맨스"]
-                val music=it["음악"]
+                sf=it["sf"] as  MutableList<SearchItem?>
+                action=it["액션"] as  MutableList<SearchItem?>
+                comedy=it["코미디"] as  MutableList<SearchItem?>
+                adventure=it["모험"] as  MutableList<SearchItem?>
+                animation=it["애니메이션"] as  MutableList<SearchItem?>
+                romance=it["로맨스"] as  MutableList<SearchItem?>
+                music=it["음악"] as  MutableList<SearchItem?>
 
                 dataItem.clear()
                 it.forEach { index ->
@@ -73,32 +80,9 @@ class HomeFragment : Fragment() {
                     }
                 }
 
+
                 dataItem.sortByDescending { it?.snippet?.publishedAt }
                 Log.d("HomeFragment","data=$dataItem")
-
-                var isSort=false
-                binding.ivSortIcon.setOnClickListener {
-                    if(isSort){
-                        setInvisiable()
-                        isSort=false
-                    }
-                    else{
-                        setVisiable()
-                        isSort=true
-                        binding.btnSort.setOnClickListener {
-                            Toast.makeText(mContext, "토스트 메세지 SORT1.", Toast.LENGTH_SHORT).show()
-                            setInvisiable()
-                            isSort=false
-                        }
-                        binding.btnSort.setOnClickListener {
-                            Toast.makeText(mContext, "토스트 메세지 SORT2.", Toast.LENGTH_SHORT).show()
-                            setInvisiable()
-                            isSort=false
-
-                        }
-                    }
-
-                }
 
                 gridmanager = GridLayoutManager(mContext, 2)  //세로 그리드뷰
                 homeAdapter = HomeAdapter(mContext, dataItem)
@@ -120,6 +104,156 @@ class HomeFragment : Fragment() {
                 }
 
             }
+        var isSort=false
+        binding.ivSortIcon.setOnClickListener {
+            if(isSort){
+                setInvisiable()
+                isSort=false
+            }
+            else{
+                setVisiable()
+                isSort=true
+                binding.btnSort.setOnClickListener {
+                    binding.tvSort.text="최신순"
+                    setInvisiable()
+                    isSort=false
+                    homeAdapter = HomeAdapter(mContext, dataItem)
+                    binding.rvRankingList.adapter = homeAdapter
+                    binding.rvRankingList.layoutManager = gridmanager
+                    binding.rvRankingList.itemAnimator = null
+
+                    homeAdapter.itemClick = object : HomeAdapter.ItemClick {
+                        override fun onClick(view: View, position: Int) {
+                            val intent = Intent(mContext, DetailActivity::class.java)
+                            intent.putExtra("dataFromFrag", dataItem[position])
+                            startActivity(intent)
+                        }
+                    }
+                }
+                binding.btnSf.setOnClickListener {
+                    binding.tvSort.text="SF"
+                    setInvisiable()
+                    isSort=false
+                    homeAdapter = HomeAdapter(mContext, sf)
+                    binding.rvRankingList.adapter = homeAdapter
+                    binding.rvRankingList.layoutManager = gridmanager
+                    binding.rvRankingList.itemAnimator = null
+
+                    homeAdapter.itemClick = object : HomeAdapter.ItemClick {
+                        override fun onClick(view: View, position: Int) {
+                            val intent = Intent(mContext, DetailActivity::class.java)
+                            intent.putExtra("dataFromFrag", sf[position])
+                            startActivity(intent)
+                        }
+                    }
+                }
+                binding.btnAction.setOnClickListener {
+                    binding.tvSort.text="액션"
+                    setInvisiable()
+                    isSort=false
+                    homeAdapter = HomeAdapter(mContext, action)
+                    binding.rvRankingList.adapter = homeAdapter
+                    binding.rvRankingList.layoutManager = gridmanager
+                    binding.rvRankingList.itemAnimator = null
+
+                    homeAdapter.itemClick = object : HomeAdapter.ItemClick {
+                        override fun onClick(view: View, position: Int) {
+                            val intent = Intent(mContext, DetailActivity::class.java)
+                            intent.putExtra("dataFromFrag", action[position])
+                            startActivity(intent)
+                        }
+                    }
+                }
+                binding.btnComedy.setOnClickListener {
+                    binding.tvSort.text="코미디"
+                    setInvisiable()
+                    isSort=false
+                    homeAdapter = HomeAdapter(mContext, comedy)
+                    binding.rvRankingList.adapter = homeAdapter
+                    binding.rvRankingList.layoutManager = gridmanager
+                    binding.rvRankingList.itemAnimator = null
+
+                    homeAdapter.itemClick = object : HomeAdapter.ItemClick {
+                        override fun onClick(view: View, position: Int) {
+                            val intent = Intent(mContext, DetailActivity::class.java)
+                            intent.putExtra("dataFromFrag", comedy[position])
+                            startActivity(intent)
+                        }
+                    }
+                }
+                binding.btnAdventure.setOnClickListener {
+                    binding.tvSort.text="모험"
+                    setInvisiable()
+                    isSort=false
+                    homeAdapter = HomeAdapter(mContext, adventure)
+                    binding.rvRankingList.adapter = homeAdapter
+                    binding.rvRankingList.layoutManager = gridmanager
+                    binding.rvRankingList.itemAnimator = null
+
+                    homeAdapter.itemClick = object : HomeAdapter.ItemClick {
+                        override fun onClick(view: View, position: Int) {
+                            val intent = Intent(mContext, DetailActivity::class.java)
+                            intent.putExtra("dataFromFrag", adventure[position])
+                            startActivity(intent)
+                        }
+                    }
+                }
+                binding.btnAnimation.setOnClickListener {
+                    binding.tvSort.text="애니메이션"
+                    setInvisiable()
+                    isSort=false
+                    homeAdapter = HomeAdapter(mContext, animation)
+                    binding.rvRankingList.adapter = homeAdapter
+                    binding.rvRankingList.layoutManager = gridmanager
+                    binding.rvRankingList.itemAnimator = null
+
+                    homeAdapter.itemClick = object : HomeAdapter.ItemClick {
+                        override fun onClick(view: View, position: Int) {
+                            val intent = Intent(mContext, DetailActivity::class.java)
+                            intent.putExtra("dataFromFrag", animation[position])
+                            startActivity(intent)
+                        }
+                    }
+                }
+                binding.btnRomance.setOnClickListener {
+                    binding.tvSort.text="로맨틱"
+                    setInvisiable()
+                    isSort=false
+                    homeAdapter = HomeAdapter(mContext, romance)
+                    binding.rvRankingList.adapter = homeAdapter
+                    binding.rvRankingList.layoutManager = gridmanager
+                    binding.rvRankingList.itemAnimator = null
+
+                    homeAdapter.itemClick = object : HomeAdapter.ItemClick {
+                        override fun onClick(view: View, position: Int) {
+                            val intent = Intent(mContext, DetailActivity::class.java)
+                            intent.putExtra("dataFromFrag", romance[position])
+                            startActivity(intent)
+                        }
+                    }
+                }
+                binding.btnMusic.setOnClickListener {
+                    binding.tvSort.text="음악"
+                    setInvisiable()
+                    isSort=false
+                    homeAdapter = HomeAdapter(mContext, music)
+                    binding.rvRankingList.adapter = homeAdapter
+                    binding.rvRankingList.layoutManager = gridmanager
+                    binding.rvRankingList.itemAnimator = null
+
+                    homeAdapter.itemClick = object : HomeAdapter.ItemClick {
+                        override fun onClick(view: View, position: Int) {
+                            val intent = Intent(mContext, DetailActivity::class.java)
+                            intent.putExtra("dataFromFrag", music[position])
+                            Log.d("HomeFragment","dataItem=${music[position]}")
+                            startActivity(intent)
+                        }
+                    }
+                }
+            }
+
+
+        }
         }
 
 
@@ -129,10 +263,22 @@ class HomeFragment : Fragment() {
         }
     private fun setInvisiable(){
         binding.btnSort.visibility=View.INVISIBLE
-        binding.btnSort.visibility=View.INVISIBLE
+        binding.btnAction.visibility=View.INVISIBLE
+        binding.btnAdventure.visibility=View.INVISIBLE
+        binding.btnAnimation.visibility=View.INVISIBLE
+        binding.btnMusic.visibility=View.INVISIBLE
+        binding.btnComedy.visibility=View.INVISIBLE
+        binding.btnRomance.visibility=View.INVISIBLE
+        binding.btnSf.visibility=View.INVISIBLE
     }
     private fun setVisiable(){
         binding.btnSort.visibility=View.VISIBLE
-        binding.btnSort.visibility=View.VISIBLE
+        binding.btnAction.visibility=View.VISIBLE
+        binding.btnAdventure.visibility=View.VISIBLE
+        binding.btnAnimation.visibility=View.VISIBLE
+        binding.btnMusic.visibility=View.VISIBLE
+        binding.btnComedy.visibility=View.VISIBLE
+        binding.btnRomance.visibility=View.VISIBLE
+        binding.btnSf.visibility=View.VISIBLE
     }
     }

@@ -98,7 +98,7 @@ class RetrofitViewModel : ViewModel() {
 
     fun init() {
 
-//        communicateNetWork2(Constants.CHANNEL_ID_LIST, Constants.GENRE_LIST, 50)
+        communicateNetWork2(Constants.CHANNEL_ID_LIST, Constants.GENRE_LIST, 50)
 
 //        communicateNetWork(Constants.WARNER_BROS_ID, "sf")
 //        communicateNetWork(Constants.NETFLIX_ID, "sf")
