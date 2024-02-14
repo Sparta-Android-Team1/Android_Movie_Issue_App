@@ -17,8 +17,10 @@ object Constants {
     const val UNIVERSAL_ID = "UCLKYLWsKF4waqDx8T_43hBw"
 
     const val PREFERENCE_KEY = "save"
+    const val MY_PAGE_PREFERENCE_KEY = "mypagesave"
     const val CHANNEL_PREFERENCE_KEY = "subscription"
     const val DATA_KEY = "data"
+    const val MY_PAGE_DATA_KEY = "mypagedata"
 
     val CHANNEL_ID_LIST: MutableList<String> = mutableListOf(
         CJENM_ID,
