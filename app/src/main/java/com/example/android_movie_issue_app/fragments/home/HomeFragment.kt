@@ -13,8 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android_movie_issue_app.activity.DetailActivity
-import com.example.android_movie_issue_app.constants.Constants
-import com.example.android_movie_issue_app.data.ItemData
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.FragmentHomeBinding
 import com.example.android_movie_issue_app.fragments.Adapter
@@ -82,6 +80,7 @@ class HomeFragment : Fragment() {
                         startActivity(intent)
                     }
                 }
+
             }
         }
 
