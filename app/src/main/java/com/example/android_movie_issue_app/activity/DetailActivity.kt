@@ -85,7 +85,7 @@ class DetailActivity : AppCompatActivity() {
             }
         })
         binding.tvTitle.text = recData?.snippet?.title   //영화제목
-        binding.tvChannelTitle.text = recData?.snippet?.channelTitle   //채널제목
+        //binding.tvChannelTitle.text = recData?.snippet?.channelTitle   //채널제목
         binding.tvDescription.text = recData?.snippet?.description     //상세설명
 
         channelViewModel.channelList.observe(this) {
@@ -93,6 +93,7 @@ class DetailActivity : AppCompatActivity() {
             it.forEach { item ->
                 if (recData?.snippet?.channelId == item.channelId) {
                     binding.ivChannelThumbnail.setImageResource(item.logo)
+                    binding.tvChannelTitle.text = item.title
                     if(!item.isSubscribed){
                         binding.btnSubscribe.text = "구독"
                         binding.btnSubscribe.setTextColor(Color.WHITE)
@@ -115,12 +116,16 @@ class DetailActivity : AppCompatActivity() {
                         if (!item.isSubscribed) {
                             item.isSubscribed = true
                             binding.btnSubscribe.text = "구독중"
+                            binding.btnSubscribe.setTextColor(Color.BLACK)
+                            binding.btnSubscribe.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
                             channelViewModel.addSubscription(item)
                             saveChannel(item)
                             Log.d("버튼구독검사", item.channelId)
                         } else {
                             item.isSubscribed = false
                             binding.btnSubscribe.text = "구독"
+                            binding.btnSubscribe.setTextColor(Color.WHITE)
+                            binding.btnSubscribe.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
                             channelViewModel.removeSubscription(recData.snippet.channelId)
                             removeChannel(item)
                             Log.d("버튼구독취소검사", recData.snippet.channelId)

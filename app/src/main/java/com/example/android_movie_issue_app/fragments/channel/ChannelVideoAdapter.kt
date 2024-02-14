@@ -17,7 +17,7 @@ class ChannelVideoAdapter(private val itemList: List<SearchItem>) : RecyclerView
 
     inner class Holder(private val binding: LayoutChannelVideoItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: SearchItem) {
-            val imageUrl = data.snippet.thumbnails?.high?.url
+            val imageUrl = data.snippet.thumbnails?.medium?.url
             Glide.with(binding.root.context).load(imageUrl).into(binding.ivThumbnail)
             binding.tvTitle.text = data.snippet.title
 

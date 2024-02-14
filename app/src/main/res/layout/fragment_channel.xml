@@ -5,7 +5,6 @@
     android:id="@+id/fragment_channel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
     tools:context=".fragments.channel.ChannelFragment">
 
     <HorizontalScrollView
@@ -31,12 +30,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:itemCount="2"
+                android:padding="8dp"
                 tools:listitem="@layout/layout_channel_item" />
 
             <LinearLayout
                 android:id="@+id/linear_add_channel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="8dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical">

@@ -55,7 +55,7 @@ class RetrofitViewModel : ViewModel() {
                             } else {
                                 var test = mutableListOf<SearchItem?>()
                                 test.add(it)
-                                test = test.distinctBy { t -> t?.id?.videoId }.sortedBy { t -> t?.snippet?.publishedAt }.toMutableList()
+                                test = test.distinct().sortedBy { t -> t?.snippet?.publishedAt }.toMutableList()
                                 currentList[genre] = test
                             }
                         }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.android_movie_issue_app.R
 import com.example.android_movie_issue_app.data.SearchItem
+import com.example.android_movie_issue_app.databinding.LayoutRecyclerciewBigitemBinding
 import com.example.android_movie_issue_app.databinding.LayoutSearchItemBinding
 
 class SearchAdapter(private val list: MutableList<SearchItem?>) : RecyclerView.Adapter<SearchAdapter.Holder>() {
@@ -18,7 +19,7 @@ class SearchAdapter(private val list: MutableList<SearchItem?>) : RecyclerView.A
 
     var itemClick : ItemClick? = null
 
-    inner class Holder(binding: LayoutSearchItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class Holder(binding: LayoutRecyclerciewBigitemBinding) : RecyclerView.ViewHolder(binding.root) {
         private val thumbNail = binding.ivThumbnail
         private val title = binding.tvTitle
 
@@ -34,7 +35,7 @@ class SearchAdapter(private val list: MutableList<SearchItem?>) : RecyclerView.A
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = LayoutSearchItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = LayoutRecyclerciewBigitemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
     }
 

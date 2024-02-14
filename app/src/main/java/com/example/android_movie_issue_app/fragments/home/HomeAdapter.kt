@@ -28,7 +28,7 @@ class HomeAdapter(private val mContext: Context, val mItems: MutableList<SearchI
         }
 
         Glide.with(mContext)
-            .load(mItems[position]?.snippet?.thumbnails?.default?.url)
+            .load(mItems[position]?.snippet?.thumbnails?.medium?.url)
             .into(holder.thumbnail)
 
         holder.title.text=mItems[position]?.snippet?.title
