@@ -1,20 +1,15 @@
-package com.example.android_movie_issue_app.fragments
+package com.example.android_movie_issue_app.fragments.home
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.android_movie_issue_app.data.ItemData
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.LayoutRecyclerciewBigitemBinding
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.Date
 
-class Adapter(private val mContext: Context, val mItems: MutableList<SearchItem?>): RecyclerView.Adapter<Adapter.Holder>() {
+class HomeAdapter(private val mContext: Context, val mItems: MutableList<SearchItem?>): RecyclerView.Adapter<HomeAdapter.Holder>() {
 
     interface ItemClick {
         fun onClick(view : View, position : Int)

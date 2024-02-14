@@ -1,5 +1,6 @@
 package com.example.android_movie_issue_app.activity
 
+import android.content.Context
 import android.app.ActivityManager
 import android.content.Intent
 import android.content.res.Configuration
@@ -14,6 +15,13 @@ import com.example.android_movie_issue_app.R
 import com.example.android_movie_issue_app.databinding.ActivityDetailBinding
 import com.example.android_movie_issue_app.databinding.ActivityMainBinding
 import com.example.android_movie_issue_app.fragments.search.SearchViewModel
+import android.util.Log
+import androidx.core.net.toUri
+import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.Glide
+import com.example.android_movie_issue_app.data.ItemData
+import com.example.android_movie_issue_app.data.SearchItem
+import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_movie_issue_app.MainActivity
@@ -33,6 +41,8 @@ import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 
 class DetailActivity : AppCompatActivity() {
+    private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
+    private val retrofitViewModel by viewModels<RetrofitViewModel>()
 
     private val retrofitViewModel: RetrofitViewModel by viewModels()
     private val channelViewModel by viewModels<ChannelViewModel>()
@@ -50,6 +60,17 @@ class DetailActivity : AppCompatActivity() {
         val recData = intent.getParcelableExtra<SearchItem>("dataFromFrag")
         Log.d("DetailActivity", "#csh recData=$recData")
 
+        //recData의 channelID로 해당 채널의 정보를 받아옴(레트로핏 통신)
+        recData?.snippet?.channelId?.let { retrofitViewModel.channelInfo(it) }
+
+        retrofitViewModel.channelItems.observe(this){   //channelItems 데이터 변화감지
+            //채널 이미지 지정
+            val imageUrl = it[0].snippet?.thumbnails?.default?.url
+            Log.d("DetailActivity","imageUrl=$imageUrl")
+            Glide.with(this)
+                .load(imageUrl)
+                .into(binding.ivChannelThumbnail)
+        }
         ViewModelManager.myPageViewModel.likeList.value?.forEach {
             if (it?.id?.videoId == recData?.id?.videoId) {
                 isLike = true

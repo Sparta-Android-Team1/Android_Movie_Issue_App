@@ -1,21 +1,25 @@
 package com.example.android_movie_issue_app.fragments.home
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.android_movie_issue_app.R
 import com.example.android_movie_issue_app.activity.DetailActivity
+import com.example.android_movie_issue_app.constants.Constants
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.FragmentHomeBinding
-import com.example.android_movie_issue_app.fragments.Adapter
 import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
 
 class HomeFragment : Fragment() {
@@ -27,7 +31,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val RetrofitViewModel by activityViewModels<RetrofitViewModel>()
     var dataItem=mutableListOf<SearchItem?>()
-    private lateinit var adapter: Adapter
+    private lateinit var homeAdapter: HomeAdapter
     private lateinit var gridmanager: GridLayoutManager
     private lateinit var mContext: Context
 
@@ -54,6 +58,14 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
             RetrofitViewModel.videoItems.observe(viewLifecycleOwner) {
+                val sf=it["sf"]
+                val action=it["액션"]
+                val comedy=it["코미디"]
+                val adventure=it["모험"]
+                val animation=it["애니메이션"]
+                val romance=it["로맨스"]
+                val music=it["음악"]
+
                 dataItem.clear()
                 it.forEach { index ->
                     index.value.forEach {t ->
@@ -61,18 +73,44 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-//            Log.d("HomeFragment","data=$dataItem")
+                dataItem.sortByDescending { it?.snippet?.publishedAt }
+                Log.d("HomeFragment","data=$dataItem")
+
+                var isSort=false
+                binding.ivSortIcon.setOnClickListener {
+                    if(isSort){
+                        setInvisiable()
+                        isSort=false
+                    }
+                    else{
+                        setVisiable()
+                        isSort=true
+                        binding.btnSort.setOnClickListener {
+                            Toast.makeText(mContext, "토스트 메세지 SORT1.", Toast.LENGTH_SHORT).show()
+                            setInvisiable()
+                            isSort=false
+                        }
+                        binding.btnSort.setOnClickListener {
+                            Toast.makeText(mContext, "토스트 메세지 SORT2.", Toast.LENGTH_SHORT).show()
+                            setInvisiable()
+                            isSort=false
+
+                        }
+                    }
+
+                }
+
                 gridmanager = GridLayoutManager(mContext, 2)  //세로 그리드뷰
-                adapter = Adapter(mContext, dataItem)
-                binding.rvRankingList.adapter = adapter
+                homeAdapter = HomeAdapter(mContext, dataItem)
+                binding.rvRankingList.adapter = homeAdapter
                 binding.rvRankingList.layoutManager = gridmanager
                 binding.rvRankingList.itemAnimator = null     //아이템 깜빡임 방지
 
-                binding.rvRealTimeRanking.adapter = adapter   //가로 리사이클러뷰
+                binding.rvRealTimeRanking.adapter = homeAdapter   //가로 리사이클러뷰
                 binding.rvRealTimeRanking.layoutManager =
                     LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
 
-                adapter.itemClick = object : Adapter.ItemClick {
+                homeAdapter.itemClick = object : HomeAdapter.ItemClick {
                     override fun onClick(view: View, position: Int) {
                         val intent = Intent(mContext, DetailActivity::class.java)
                         intent.putExtra("dataFromFrag", dataItem[position])
@@ -89,4 +127,12 @@ class HomeFragment : Fragment() {
             super.onDestroyView()
             _binding = null
         }
+    private fun setInvisiable(){
+        binding.btnSort.visibility=View.INVISIBLE
+        binding.btnSort.visibility=View.INVISIBLE
+    }
+    private fun setVisiable(){
+        binding.btnSort.visibility=View.VISIBLE
+        binding.btnSort.visibility=View.VISIBLE
+    }
     }
