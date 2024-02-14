@@ -56,7 +56,6 @@
             app:strokeWidth="1dp">
 
             <ImageView
-                android:id="@+id/iv_channelThumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />

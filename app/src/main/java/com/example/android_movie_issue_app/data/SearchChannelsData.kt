@@ -1,5 +1,6 @@
 package com.example.android_movie_issue_app.data
 
+import com.example.android_movie_issue_app.fragments.channel.ChannelItem
 import com.google.gson.annotations.SerializedName
 
 data class SearchChannels(
