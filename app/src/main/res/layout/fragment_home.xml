@@ -54,7 +54,7 @@
         app:layout_constraintTop_toTopOf="@id/tv_category_ranking"
         app:layout_constraintBottom_toBottomOf="@id/tv_category_ranking"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="20dp"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -100,6 +100,7 @@
             android:text="최신순"
             android:background="@color/purple_200"
             android:gravity="center"
+            android:visibility="gone"
             />
 
         <Button
@@ -110,59 +111,67 @@
             android:text="sf"
             android:background="@color/purple_200"
             android:gravity="center"
+            android:visibility="gone"
             />
         <Button
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:id="@+id/btn_action"
             android:layout_marginTop="2dp"
-            android:text="코미디"
+            android:text="액션"
             android:background="@color/purple_200"
             android:gravity="center"
+            android:visibility="gone"
             />
         <Button
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:id="@+id/btn_comedy"
             android:layout_marginTop="2dp"
-            android:text="모험"
+            android:text="코미디"
             android:background="@color/purple_200"
             android:gravity="center"
+            android:visibility="gone"
             />
         <Button
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:id="@+id/btn_adventure"
             android:layout_marginTop="2dp"
-            android:text="애니메이션"
+            android:text="모험"
             android:background="@color/purple_200"
             android:gravity="center"
+            android:visibility="gone"
             />
         <Button
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:id="@+id/btn_animation"
             android:layout_marginTop="2dp"
-            android:text="로맨스"
+            android:text="애니메이션"
             android:background="@color/purple_200"
             android:gravity="center"
+            android:visibility="gone"
             />
         <Button
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:id="@+id/btn_romance"
             android:layout_marginTop="2dp"
-            android:text="음악"
+            android:text="로맨스"
             android:background="@color/purple_200"
+            android:gravity="center"
+            android:visibility="gone"
             />
         <Button
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:id="@+id/btn_music"
             android:layout_marginTop="2dp"
-            android:text="장르별"
+            android:text="음악"
             android:background="@color/purple_200"
             android:gravity="center"
+            android:visibility="gone"
             />
 
     </LinearLayout>
