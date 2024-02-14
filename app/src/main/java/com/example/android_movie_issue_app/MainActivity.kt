@@ -38,10 +38,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        RetrofitViewModel.videoItems.observe(this){
+//        retrofitViewModel.videoItems.observe(this){
 //            saveData()
 //        }
-//        RetrofitViewModel.init()
+//        retrofitViewModel.init()
 
         loadData()
         //RetrofitViewModel.channelInfo(Constants.NETFLIX_ID)

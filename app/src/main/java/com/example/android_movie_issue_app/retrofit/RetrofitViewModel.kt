@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android_movie_issue_app.constants.Constants
+import com.example.android_movie_issue_app.data.ChannelItem
 import com.example.android_movie_issue_app.data.SearchChannels
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.data.SearchVideo
@@ -23,6 +24,9 @@ class RetrofitViewModel : ViewModel() {
     
     private var _videoItems: MutableLiveData<MutableMap<String, MutableList<SearchItem?>>> = MutableLiveData()
     val videoItems: LiveData<MutableMap<String, MutableList<SearchItem?>>> = _videoItems
+
+    private val _channelItems : MutableLiveData<MutableList<ChannelItem>> = MutableLiveData()
+    val channelItems : LiveData<MutableList<ChannelItem>> = _channelItems
 
     var nextPageToken: String? = null
     var prevPageToken: String? = null
@@ -76,6 +80,13 @@ class RetrofitViewModel : ViewModel() {
             ) {
                 Log.d("ViewModel", "csh channelInfo")
                 Log.d("ViewModel", "csh ${response.body().toString()}")
+
+                val currentList = _channelItems.value?.toMutableList() ?: mutableListOf()
+                response.body()?.items?.forEach {
+                    currentList.add(it)
+                }
+                _channelItems.value = currentList
+
             }
 
             override fun onFailure(call: Call<SearchChannels>, t: Throwable) {
