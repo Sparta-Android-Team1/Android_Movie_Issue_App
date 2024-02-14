@@ -3,24 +3,28 @@ package com.example.android_movie_issue_app
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.activity.viewModels
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.android_movie_issue_app.activity.DetailActivity
 import com.example.android_movie_issue_app.constants.Constants
+import com.example.android_movie_issue_app.constants.ViewModelManager
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.ActivityMainBinding
+import com.example.android_movie_issue_app.fragments.mypage.MyPageViewModel
 import com.example.android_movie_issue_app.fragments.search.SearchViewModel
 import com.example.android_movie_issue_app.retrofit.RetrofitViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var splashScreen: SplashScreen
     private val retrofitViewModel by viewModels<RetrofitViewModel>()
+    //private lateinit var myPageViewModel : MyPageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ViewModelManager.myPageViewModel = ViewModelProvider(this)[MyPageViewModel::class.java]
 
 //        retrofitViewModel.videoItems.observe(this){
 //            saveData()
@@ -58,8 +65,6 @@ class MainActivity : AppCompatActivity() {
         )
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
@@ -77,10 +82,11 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, DetailActivity::class.java)
         startActivity(intent)
     }
+
     private fun saveData() {
         val pref = getSharedPreferences(Constants.PREFERENCE_KEY, 0)
         val edit = pref.edit()
-
+        edit.clear()
         val gson = Gson()
         val json = gson.toJson(retrofitViewModel.videoItems.value)
 
@@ -103,5 +109,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }

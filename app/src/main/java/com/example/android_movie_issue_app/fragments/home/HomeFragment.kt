@@ -118,6 +118,7 @@ class HomeFragment : Fragment() {
                         startActivity(intent)
                     }
                 }
+
             }
         }
 
