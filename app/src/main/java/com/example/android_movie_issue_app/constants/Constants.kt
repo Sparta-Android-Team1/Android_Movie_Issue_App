@@ -8,7 +8,9 @@ object Constants {
     const val WARNER_BROS_ID = "UC8AD5KHdsFzp8qoJvS4YSYg"
 
     const val PREFERENCE_KEY = "save"
+    const val MY_PAGE_PREFERENCE_KEY = "mypagesave"
     const val DATA_KEY = "data"
+    const val MY_PAGE_DATA_KEY = "mypagedata"
 
     val CHANNEL_ID_LIST: MutableList<String> = mutableListOf(
         NETFLIX_ID,
