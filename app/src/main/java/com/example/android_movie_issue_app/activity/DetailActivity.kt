@@ -39,16 +39,17 @@ class DetailActivity : AppCompatActivity() {
         Log.d("DetailActivity", "#csh recData=$recData")
 
         //recData의 channelID로 해당 채널의 정보를 받아옴(레트로핏 통신)
-        recData?.snippet?.channelId?.let { retrofitViewModel.channelInfo(it) }
+//        recData?.snippet?.channelId?.let { retrofitViewModel.channelInfo(it) }
+//
+//        retrofitViewModel.channelItems.observe(this){   //channelItems 데이터 변화감지
+//            //채널 이미지 지정
+//            val imageUrl = it[0].snippet?.thumbnails?.default?.url
+//            Log.d("DetailActivity","imageUrl=$imageUrl")
+//            Glide.with(this)
+//                .load(imageUrl)
+//                .into(binding.ivChannelThumbnail)
+//        }
 
-        retrofitViewModel.channelItems.observe(this){   //channelItems 데이터 변화감지
-            //채널 이미지 지정
-            val imageUrl = it[0].snippet?.thumbnails?.default?.url
-            Log.d("DetailActivity","imageUrl=$imageUrl")
-            Glide.with(this)
-                .load(imageUrl)
-                .into(binding.ivChannelThumbnail)
-        }
         ViewModelManager.myPageViewModel.likeList.value?.forEach {
             if (it?.id?.videoId == recData?.id?.videoId) {
                 isLike = true
@@ -88,8 +89,10 @@ class DetailActivity : AppCompatActivity() {
         binding.tvDescription.text = recData?.snippet?.description     //상세설명
 
         channelViewModel.channelList.observe(this) {
+
             it.forEach { item ->
                 if (recData?.snippet?.channelId == item.channelId) {
+                    binding.ivChannelThumbnail.setImageResource(item.logo)
                     if(!item.isSubscribed){
                         binding.btnSubscribe.text = "구독"
                         binding.btnSubscribe.setTextColor(Color.WHITE)
