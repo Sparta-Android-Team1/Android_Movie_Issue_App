@@ -120,22 +120,25 @@
         app:rippleColor="@android:color/holo_blue_light"/>
 
     <LinearLayout
+        android:id="@+id/linear_sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/iv_sort_icon"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:background="@color/white">
 
         <Button
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:id="@+id/btn_sort"
             android:text="최신순"
-            android:background="@color/purple_200"
+            android:background="@color/button_color"
             android:gravity="center"
             android:visibility="gone"
+            android:textColor="@color/white"
             />
 
         <Button
@@ -144,9 +147,10 @@
             android:id="@+id/btn_sf"
             android:layout_marginTop="2dp"
             android:text="sf"
-            android:background="@color/purple_200"
+            android:background="@color/button_color"
             android:gravity="center"
             android:visibility="gone"
+            android:textColor="@color/white"
             />
         <Button
             android:layout_width="110dp"
@@ -154,9 +158,10 @@
             android:id="@+id/btn_action"
             android:layout_marginTop="2dp"
             android:text="액션"
-            android:background="@color/purple_200"
+            android:background="@color/button_color"
             android:gravity="center"
             android:visibility="gone"
+            android:textColor="@color/white"
             />
         <Button
             android:layout_width="110dp"
@@ -164,9 +169,10 @@
             android:id="@+id/btn_comedy"
             android:layout_marginTop="2dp"
             android:text="코미디"
-            android:background="@color/purple_200"
+            android:background="@color/button_color"
             android:gravity="center"
             android:visibility="gone"
+            android:textColor="@color/white"
             />
         <Button
             android:layout_width="110dp"
@@ -174,9 +180,10 @@
             android:id="@+id/btn_adventure"
             android:layout_marginTop="2dp"
             android:text="모험"
-            android:background="@color/purple_200"
+            android:background="@color/button_color"
             android:gravity="center"
             android:visibility="gone"
+            android:textColor="@color/white"
             />
         <Button
             android:layout_width="110dp"
@@ -184,9 +191,10 @@
             android:id="@+id/btn_animation"
             android:layout_marginTop="2dp"
             android:text="애니메이션"
-            android:background="@color/purple_200"
+            android:background="@color/button_color"
             android:gravity="center"
             android:visibility="gone"
+            android:textColor="@color/white"
             />
         <Button
             android:layout_width="110dp"
@@ -194,9 +202,10 @@
             android:id="@+id/btn_romance"
             android:layout_marginTop="2dp"
             android:text="로맨스"
-            android:background="@color/purple_200"
+            android:background="@color/button_color"
             android:gravity="center"
             android:visibility="gone"
+            android:textColor="@color/white"
             />
         <Button
             android:layout_width="110dp"
@@ -204,9 +213,10 @@
             android:id="@+id/btn_music"
             android:layout_marginTop="2dp"
             android:text="음악"
-            android:background="@color/purple_200"
+            android:background="@color/button_color"
             android:gravity="center"
             android:visibility="gone"
+            android:textColor="@color/white"
             />
 
     </LinearLayout>

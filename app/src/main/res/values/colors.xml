@@ -13,4 +13,6 @@
     <color name="slate_grey">#6C838B</color>
     <color name="americano">#7F726A</color>
     <color name="santafe">#BB7748</color>
+    <color name="button_color">#0E1B41</color>
+    <color name="button_pressed_color">#FE4155</color>
 </resources>

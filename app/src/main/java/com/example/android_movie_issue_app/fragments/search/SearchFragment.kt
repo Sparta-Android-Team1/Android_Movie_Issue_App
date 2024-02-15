@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -59,42 +60,87 @@ class SearchFragment : Fragment() {
 
         clickFAB()
 
-        binding.tvSearchBtn.setOnClickListener {
-            var test: MutableList<SearchItem?> = mutableListOf()
-            val searchText = binding.etSearch.text.toString()
+        binding.etSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                var test: MutableList<SearchItem?> = mutableListOf()
+                val searchText = query.toString()
 
-            retrofitViewModel.videoItems.value?.forEach { index ->
-                if (index.key.contains(searchText)) {
+                retrofitViewModel.videoItems.value?.forEach { index ->
+                    if (index.key.contains(searchText)) {
+                        index.value.forEach { t ->
+                            test.add(t)
+                        }
+                    }
+
                     index.value.forEach { t ->
-                        test.add(t)
+                        if (t?.snippet?.channelTitle!!.contains(searchText)
+                            || t.snippet.title.contains(searchText)
+                            || t.snippet.description.contains(searchText)) {
+                            //Log.i("Minyong", "test!!")
+
+                            test.add(t)
+                        }
                     }
                 }
 
-                index.value.forEach { t ->
-                    if (t?.snippet?.channelTitle!!.contains(searchText)
-                        || t.snippet.title.contains(searchText)
-                        || t.snippet.description.contains(searchText)) {
-                        //Log.i("Minyong", "test!!")
+                test = test.distinctBy { it?.id?.videoId }.toMutableList()
+                test.sortByDescending { it?.snippet?.publishedAt }
 
-                        test.add(t)
+                val adapter = SearchAdapter(test)
+                adapter.itemClick = object : SearchAdapter.ItemClick {
+                    override fun onClick(view: View, position: Int, data: SearchItem?) {
+                        val intent = Intent(fragContext, DetailActivity::class.java)
+                        //(activity as MainActivity).changeActivity()
+                        intent.putExtra("dataFromFrag", test[position])
+                        startActivity(intent)
                     }
                 }
+                binding.recyclerSearch.adapter = adapter
+                return false
             }
 
-            test = test.distinctBy { it?.id?.videoId }.toMutableList()
-            test.sortByDescending { it?.snippet?.publishedAt }
-
-            val adapter = SearchAdapter(test)
-            adapter.itemClick = object : SearchAdapter.ItemClick {
-                override fun onClick(view: View, position: Int, data: SearchItem?) {
-                    val intent = Intent(fragContext, DetailActivity::class.java)
-                    //(activity as MainActivity).changeActivity()
-                    intent.putExtra("dataFromFrag", test[position])
-                    startActivity(intent)
-                }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
             }
-            binding.recyclerSearch.adapter = adapter
-        }
+
+        })
+
+//        binding.tvSearchBtn.setOnClickListener {
+//            var test: MutableList<SearchItem?> = mutableListOf()
+//            val searchText = binding.etSearch.text.toString()
+//
+//            retrofitViewModel.videoItems.value?.forEach { index ->
+//                if (index.key.contains(searchText)) {
+//                    index.value.forEach { t ->
+//                        test.add(t)
+//                    }
+//                }
+//
+//                index.value.forEach { t ->
+//                    if (t?.snippet?.channelTitle!!.contains(searchText)
+//                        || t.snippet.title.contains(searchText)
+//                        || t.snippet.description.contains(searchText)) {
+//                        //Log.i("Minyong", "test!!")
+//
+//                        test.add(t)
+//                    }
+//                }
+//            }
+//
+//            test = test.distinctBy { it?.id?.videoId }.toMutableList()
+//            test.sortByDescending { it?.snippet?.publishedAt }
+//
+//            val adapter = SearchAdapter(test)
+//            adapter.itemClick = object : SearchAdapter.ItemClick {
+//                override fun onClick(view: View, position: Int, data: SearchItem?) {
+//                    val intent = Intent(fragContext, DetailActivity::class.java)
+//                    //(activity as MainActivity).changeActivity()
+//                    intent.putExtra("dataFromFrag", test[position])
+//                    startActivity(intent)
+//                }
+//            }
+//            binding.recyclerSearch.adapter = adapter
+//        }
     }
 
     override fun onDestroyView() {

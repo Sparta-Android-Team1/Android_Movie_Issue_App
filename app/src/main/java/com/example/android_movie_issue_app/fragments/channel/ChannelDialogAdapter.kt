@@ -5,9 +5,11 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources.getColorStateList
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android_movie_issue_app.R
 import com.example.android_movie_issue_app.data.ChannelListItem
 import com.example.android_movie_issue_app.databinding.LayoutChannelDialogItemBinding
 
@@ -27,12 +29,14 @@ class ChannelDialogAdapter : ListAdapter<ChannelListItem,ChannelDialogAdapter.Ho
                 if(data.isSubscribed) {
                     btnSubscribe.text = "구독중"
                     btnSubscribe.setTextColor(Color.BLACK)
-                    btnSubscribe.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
+                    val color = Color.parseColor("#FE4155")
+                    btnSubscribe.backgroundTintList = ColorStateList.valueOf(color)
 
                 } else{
                     btnSubscribe.text = "구독"
                     btnSubscribe.setTextColor(Color.WHITE)
-                    btnSubscribe.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
+                    val color = Color.parseColor("#0E1B41")
+                    btnSubscribe.backgroundTintList = ColorStateList.valueOf(color)
                 }
 
                 btnSubscribe.setOnClickListener {
@@ -40,11 +44,14 @@ class ChannelDialogAdapter : ListAdapter<ChannelListItem,ChannelDialogAdapter.Ho
                     if(data.isSubscribed) {
                         btnSubscribe.text = "구독중"
                         btnSubscribe.setTextColor(Color.BLACK)
-                        btnSubscribe.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
+                        val color = Color.parseColor("#FE4155")
+                        btnSubscribe.backgroundTintList = ColorStateList.valueOf(color)
                     } else{
                         btnSubscribe.text = "구독"
                         btnSubscribe.setTextColor(Color.WHITE)
-                        btnSubscribe.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
+                        val color = Color.parseColor("#0E1B41")
+                        btnSubscribe.backgroundTintList = ColorStateList.valueOf(color)
+
                     }
                 }
             }

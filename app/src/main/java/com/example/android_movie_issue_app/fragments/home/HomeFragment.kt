@@ -303,6 +303,7 @@ class HomeFragment : Fragment() {
         binding.btnComedy.visibility=View.INVISIBLE
         binding.btnRomance.visibility=View.INVISIBLE
         binding.btnSf.visibility=View.INVISIBLE
+        binding.linearSort.visibility = View.INVISIBLE
     }
     private fun setVisiable(){
         binding.btnSort.visibility=View.VISIBLE
@@ -313,5 +314,6 @@ class HomeFragment : Fragment() {
         binding.btnComedy.visibility=View.VISIBLE
         binding.btnRomance.visibility=View.VISIBLE
         binding.btnSf.visibility=View.VISIBLE
+        binding.linearSort.visibility = View.VISIBLE
     }
     }

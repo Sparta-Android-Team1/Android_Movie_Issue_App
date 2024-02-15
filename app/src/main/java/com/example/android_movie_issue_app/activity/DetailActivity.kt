@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.graphics.toColor
 import com.example.android_movie_issue_app.R
 import com.example.android_movie_issue_app.databinding.ActivityDetailBinding
 import com.bumptech.glide.Glide
@@ -54,6 +55,9 @@ class DetailActivity : AppCompatActivity() {
             if (it?.id?.videoId == recData?.id?.videoId) {
                 isLike = true
                 binding.btnLiked.text = "좋아요 취소"
+                binding.btnLiked.backgroundTintList = getColorStateList(R.color.button_pressed_color)
+            } else {
+                binding.btnLiked.backgroundTintList = getColorStateList(R.color.button_color)
             }
         }
 
@@ -61,10 +65,12 @@ class DetailActivity : AppCompatActivity() {
             if (isLike) {
                 ViewModelManager.myPageViewModel.removeLikeList(recData)
                 binding.btnLiked.text = "좋아요"
+                binding.btnLiked.backgroundTintList = getColorStateList(R.color.button_color)
                 isLike = false
             } else {
                 ViewModelManager.myPageViewModel.addLikeList(recData)
                 binding.btnLiked.text = "좋아요 취소"
+                binding.btnLiked.backgroundTintList = getColorStateList(R.color.button_pressed_color)
                 isLike = true
             }
             saveData()
@@ -96,11 +102,11 @@ class DetailActivity : AppCompatActivity() {
                     if(!item.isSubscribed){
                         binding.btnSubscribe.text = "구독"
                         binding.btnSubscribe.setTextColor(Color.WHITE)
-                        binding.btnSubscribe.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
+                        binding.btnSubscribe.backgroundTintList = getColorStateList(R.color.button_color)
                     } else {
                         binding.btnSubscribe.text = "구독중"
                         binding.btnSubscribe.setTextColor(Color.BLACK)
-                        binding.btnSubscribe.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
+                        binding.btnSubscribe.backgroundTintList = getColorStateList(R.color.button_pressed_color)
                     }
                 }
             }
@@ -116,7 +122,7 @@ class DetailActivity : AppCompatActivity() {
                             item.isSubscribed = true
                             binding.btnSubscribe.text = "구독중"
                             binding.btnSubscribe.setTextColor(Color.BLACK)
-                            binding.btnSubscribe.backgroundTintList = ColorStateList.valueOf(Color.YELLOW)
+                            binding.btnSubscribe.backgroundTintList = getColorStateList(R.color.button_pressed_color)
                             channelViewModel.addSubscription(item)
                             saveChannel(item)
                             Log.d("버튼구독검사", item.channelId)
@@ -124,7 +130,7 @@ class DetailActivity : AppCompatActivity() {
                             item.isSubscribed = false
                             binding.btnSubscribe.text = "구독"
                             binding.btnSubscribe.setTextColor(Color.WHITE)
-                            binding.btnSubscribe.backgroundTintList = ColorStateList.valueOf(Color.BLACK)
+                            binding.btnSubscribe.backgroundTintList = getColorStateList(R.color.button_color)
                             channelViewModel.removeSubscription(recData.snippet.channelId)
                             removeChannel(item)
                             Log.d("버튼구독취소검사", recData.snippet.channelId)

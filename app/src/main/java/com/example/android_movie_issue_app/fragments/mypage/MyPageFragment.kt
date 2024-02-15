@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.android_movie_issue_app.R
 import com.example.android_movie_issue_app.activity.DetailActivity
 import com.example.android_movie_issue_app.constants.ViewModelManager
 import com.example.android_movie_issue_app.data.SearchItem
@@ -84,8 +85,10 @@ class MyPageFragment : Fragment() {
 
         binding.ivEditNickname.setOnClickListener {
             if (binding.etNickname.isEnabled == false) {
+                binding.ivEditNickname.setImageResource(R.drawable.check_icon)
                 binding.etNickname.isEnabled = true
             } else {
+                binding.ivEditNickname.setImageResource(R.drawable.pencil_icon2)
                 binding.etNickname.isEnabled = false
             }
 
