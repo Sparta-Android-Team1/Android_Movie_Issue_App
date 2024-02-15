@@ -2,7 +2,10 @@ package com.example.android_movie_issue_app.constants
 
 object Constants {
 
-    const val YOUTUBE_API_KEY = "AIzaSyC8SSTjYX8NTKVgMrMWVgpJsGsqU-QMeuk"
+    const val MINYONG_API_KEY = "AIzaSyABu3U60xq3lFpD8gXP6ssMVqKRDsB22hs"
+
+    //const val YOUTUBE_API_KEY = "AIzaSyC8SSTjYX8NTKVgMrMWVgpJsGsqU-QMeuk"
+    const val YOUTUBE_API_KEY = MINYONG_API_KEY
 
 
     const val CJENM_ID = "UCRV0Gb4i99Aj9UiqCE8xlvw"

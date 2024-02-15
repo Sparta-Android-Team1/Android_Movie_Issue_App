@@ -19,7 +19,7 @@ class SearchAdapter(private val list: MutableList<SearchItem?>) : RecyclerView.A
 
     var itemClick : ItemClick? = null
 
-    inner class Holder(binding: LayoutRecyclerciewBigitemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class Holder(binding: LayoutSearchItemBinding) : RecyclerView.ViewHolder(binding.root) {
         private val thumbNail = binding.ivThumbnail
         private val title = binding.tvTitle
 
@@ -35,7 +35,7 @@ class SearchAdapter(private val list: MutableList<SearchItem?>) : RecyclerView.A
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = LayoutRecyclerciewBigitemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = LayoutSearchItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
     }
 

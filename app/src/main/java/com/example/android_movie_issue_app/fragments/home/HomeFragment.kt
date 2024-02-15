@@ -67,6 +67,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         clickFAB()
             RetrofitViewModel.videoItems.observe(viewLifecycleOwner) {
+
+
                 sf=it["sf"] as  MutableList<SearchItem?>
                 action=it["액션"] as  MutableList<SearchItem?>
                 comedy=it["코미디"] as  MutableList<SearchItem?>
@@ -83,7 +85,7 @@ class HomeFragment : Fragment() {
                 }
 
 
-                dataItem.sortByDescending { it?.snippet?.publishedAt }
+                //dataItem.sortByDescending { it?.snippet?.publishedAt }
                 Log.d("HomeFragment","data=$dataItem")
 
                 gridmanager = GridLayoutManager(mContext, 2)  //세로 그리드뷰

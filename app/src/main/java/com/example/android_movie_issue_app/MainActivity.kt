@@ -51,6 +51,9 @@ class MainActivity : AppCompatActivity() {
 //        retrofitViewModel.init()
 
         loadData()
+        loadData2()
+
+
         //RetrofitViewModel.channelInfo(Constants.NETFLIX_ID)
 
         val navView: BottomNavigationView = binding.navView
@@ -104,6 +107,22 @@ class MainActivity : AppCompatActivity() {
                 var storeMap = mutableMapOf<String, MutableList<SearchItem?>>()
                 storeMap = gson.fromJson(json, typeToken)
                 retrofitViewModel.loadData(storeMap)
+            } catch (e: JsonParseException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun loadData2() {
+        val pref = getSharedPreferences(Constants.MY_PAGE_PREFERENCE_KEY, 0)
+        if (pref.contains(Constants.MY_PAGE_DATA_KEY)) {
+            val gson = Gson()
+            val json = pref.getString(Constants.MY_PAGE_DATA_KEY, "")
+            try {
+                val typeToken = object : TypeToken<MutableList<SearchItem?>>() {}.type
+                var storeMap = mutableListOf<SearchItem?>()
+                storeMap = gson.fromJson(json, typeToken)
+                ViewModelManager.myPageViewModel.loadData(storeMap)
             } catch (e: JsonParseException) {
                 e.printStackTrace()
             }

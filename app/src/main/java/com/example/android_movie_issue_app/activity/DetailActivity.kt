@@ -70,7 +70,6 @@ class DetailActivity : AppCompatActivity() {
             saveData()
         }
 
-        loadData()
 
         val video = binding.ivThumbnail
         lifecycle.addObserver(video)    //액티비티의 라이프사이클을 관찰해서 "video"를 라이프사이클 이벤트와 동기화
@@ -181,7 +180,7 @@ class DetailActivity : AppCompatActivity() {
         val edit = pref.edit()
 
         val gson = Gson()
-        val json = gson.toJson(ViewModelManager.myPageViewModel.likeList)
+        val json = gson.toJson(ViewModelManager.myPageViewModel.likeList.value)
 
         edit.putString(Constants.MY_PAGE_DATA_KEY, json)
         edit.apply()

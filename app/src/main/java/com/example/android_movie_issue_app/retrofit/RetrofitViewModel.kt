@@ -34,6 +34,14 @@ class RetrofitViewModel : ViewModel() {
         _videoItems.value = itemList
     }
 
+    fun sortList() {
+        val test = _videoItems.value?.values?.distinctBy {
+            it.forEach { t ->
+                t?.id?.videoId
+            }
+        }?.toMutableList()
+    }
+
     private fun communicateNetWork2(channelList: MutableList<String>, genreList: MutableList<String>, maxResult: Int = 5) = viewModelScope.launch {
 
         channelList.forEach {
@@ -45,8 +53,8 @@ class RetrofitViewModel : ViewModel() {
                         call: Call<SearchVideo>,
                         response: Response<SearchVideo>
                     ) {
-                        nextPageToken = response.body()?.nextPageToken
-                        prevPageToken = response.body()?.prevPageToken
+//                        nextPageToken = response.body()?.nextPageToken
+//                        prevPageToken = response.body()?.prevPageToken
 
                         val currentList = _videoItems.value?.toMutableMap() ?: mutableMapOf()
                         response.body()?.items?.forEach {
@@ -55,7 +63,7 @@ class RetrofitViewModel : ViewModel() {
                             } else {
                                 var test = mutableListOf<SearchItem?>()
                                 test.add(it)
-                                test = test.distinct().sortedBy { t -> t?.snippet?.publishedAt }.toMutableList()
+                                test = test.sortedByDescending { t -> t?.snippet?.publishedAt }.toMutableList()
                                 currentList[genre] = test
                             }
                         }

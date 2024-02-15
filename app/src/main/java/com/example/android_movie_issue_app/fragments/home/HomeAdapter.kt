@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.LayoutRecyclerciewBigitemBinding
 
-class HomeAdapter(private val mContext: Context, val mItems: MutableList<SearchItem?>): RecyclerView.Adapter<HomeAdapter.Holder>() {
+class HomeAdapter(private val mContext: Context, var mItems: MutableList<SearchItem?>): RecyclerView.Adapter<HomeAdapter.Holder>() {
 
     interface ItemClick {
         fun onClick(view : View, position : Int)
@@ -23,6 +23,7 @@ class HomeAdapter(private val mContext: Context, val mItems: MutableList<SearchI
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        mItems = mItems.distinctBy { it?.snippet?.title }.toMutableList()
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }

@@ -29,7 +29,7 @@ class MyPageViewModel : ViewModel() {
     }
 
     fun loadData(itemList: MutableList<SearchItem?>) {
-        _likeList.value = itemList.toMutableList()
+        _likeList.value = itemList
     }
 
 }

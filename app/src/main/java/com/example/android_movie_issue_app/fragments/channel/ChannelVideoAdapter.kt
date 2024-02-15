@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.android_movie_issue_app.data.SearchItem
 import com.example.android_movie_issue_app.databinding.LayoutChannelVideoItemBinding
 
-class ChannelVideoAdapter(private val itemList: List<SearchItem>) : RecyclerView.Adapter<ChannelVideoAdapter.Holder>() {
+class ChannelVideoAdapter(private var itemList: List<SearchItem>) : RecyclerView.Adapter<ChannelVideoAdapter.Holder>() {
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
@@ -33,8 +33,9 @@ class ChannelVideoAdapter(private val itemList: List<SearchItem>) : RecyclerView
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        itemList = itemList.distinctBy { it.snippet.title }.sortedByDescending { it.snippet.publishedAt }
         val item = itemList[position]
-        item?.let { holder.bind(it) }
+        item.let { holder.bind(it) }
     }
 
     override fun getItemCount(): Int = itemList.size
