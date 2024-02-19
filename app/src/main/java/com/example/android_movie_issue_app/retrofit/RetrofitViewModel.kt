@@ -26,9 +26,7 @@ class RetrofitViewModel : ViewModel() {
 
     private val _channelItems : MutableLiveData<MutableList<ChannelItem>> = MutableLiveData()
     val channelItems : LiveData<MutableList<ChannelItem>> = _channelItems
-
-    var nextPageToken: String? = null
-    var prevPageToken: String? = null
+ 
 
     fun loadData(itemList: MutableMap<String, MutableList<SearchItem?>>) {
         _videoItems.value = itemList
